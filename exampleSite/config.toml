@@ -1,0 +1,110 @@
+baseURL = "https://YOUR_SITE.example.invalid/"
+languageCode = "en"
+title = "YOUR_NAME | Resume"
+theme = "cvnewtheme"
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+author = "YOUR_NAME"
+description = "Replace this text with a concise professional summary."
+
+[params.seo]
+canonical = "https://YOUR_SITE.example.invalid/"
+robots = "noindex, nofollow"
+personName = "YOUR_NAME"
+personJobTitle = "YOUR_ROLE"
+ogImage = "assets/images/avatar.svg"
+keywords = ["YOUR_SPECIALTY", "YOUR_DOMAIN"]
+
+[params.profile]
+enable = true
+name = "YOUR_NAME"
+tagline = "YOUR_ROLE | YOUR_SPECIALTY"
+
+[params.contact]
+enable = true
+location = "YOUR_CITY, YOUR_COUNTRY"
+
+[[params.contact.list]]
+icon = "fas fa-envelope"
+url = "mailto:YOUR_EMAIL@example.invalid"
+text = "YOUR_EMAIL@example.invalid"
+
+[[params.contact.list]]
+icon = "fas fa-globe"
+url = "https://YOUR_SITE.example.invalid/"
+text = "YOUR_WEBSITE"
+
+[params.summary]
+enable = true
+
+[[params.summary.list]]
+
+[[params.summary.list.items]]
+text = "Replace this item with a short summary of your experience, scope, and results."
+
+[params.experience]
+enable = true
+
+[[params.experience.list]]
+title = "YOUR_ROLE"
+dates = "START_DATE - END_DATE"
+company = "YOUR_COMPANY"
+location = "YOUR_CITY, YOUR_COUNTRY"
+details = "Replace this text with the purpose and scope of your role."
+
+[[params.experience.list.items]]
+details = "Replace this item with a measurable result."
+
+[params.skills]
+enable = true
+
+[[params.skills.list]]
+title = "YOUR_SKILL_GROUP"
+
+[[params.skills.list.items]]
+details = "YOUR_SKILL_1. YOUR_SKILL_2. YOUR_SKILL_3."
+
+[params.education]
+enable = true
+
+[[params.education.list]]
+degree = "YOUR_DEGREE"
+university = "YOUR_INSTITUTION"
+dates = "START_YEAR - END_YEAR"
+
+[params.certifications]
+enable = true
+
+[[params.certifications.list]]
+name = "YOUR_CERTIFICATION"
+body = "YOUR_ISSUER"
+date = "YOUR_YEAR"
+
+[params.awards]
+enable = false
+
+[params.languages]
+enable = false
+
+[params.interests]
+enable = false
+
+[params.projects]
+enable = false
+
+[params.information]
+enable = false
+
+[params.social]
+enable = true
+
+[[params.social.list]]
+icon = "fab fa-linkedin"
+url = "https://YOUR_PROFILE.example.invalid/"
+title = "YOUR_PROFESSIONAL_PROFILE"
+
+[[params.social.list]]
+icon = "fab fa-github-square"
+url = "https://YOUR_CODE_PROFILE.example.invalid/"
+title = "YOUR_CODE_PROFILE"

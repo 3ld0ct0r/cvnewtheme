@@ -1,0 +1,21 @@
+{{ $lines := slice }}
+{{ range .Site.Params.summary.list }}
+{{ range .items }}
+{{ with .text }}
+{{ $line := trim (. | plainify) " " }}
+{{ if $line }}
+{{ $lines = $lines | append $line }}
+{{ end }}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{ if gt (len $lines) 0 }}
+<div class="resume-intro py-2">
+  <div class="summary-merged">
+    {{ range $lines }}
+    <p class="summary-line mb-1">{{ . }}</p>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

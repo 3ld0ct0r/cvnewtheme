@@ -1,0 +1,72 @@
+{{ $title := .Site.Title | default (printf "%s | %s" .Site.Params.profile.name .Site.Params.profile.tagline) }}
+{{ $desc := .Site.Params.description }}
+{{ $canonical := .Site.Params.seo.canonical | default .Site.BaseURL }}
+{{ $keywords := .Site.Params.seo.keywords | default (slice "YOUR_SPECIALTY" "YOUR_DOMAIN") }}
+{{ $knowsAbout := .Site.Params.seo.knowsAbout | default $keywords }}
+{{ $robots := .Site.Params.seo.robots | default "index, follow" }}
+{{ $personName := .Site.Params.seo.personName | default .Site.Params.profile.name }}
+{{ $personJobTitle := .Site.Params.seo.personJobTitle | default .Site.Params.profile.tagline }}
+{{ $ogImage := (.Site.Params.seo.ogImage | default "assets/images/avatar.svg") | absURL }}
+{{ $resumeTxtURL := printf "%sresume.txt" $canonical }}
+{{ $sameAs := slice }}
+{{ range .Site.Params.social.list }}
+  {{ $u := .url }}
+  {{ if hasPrefix $u "//" }}{{ $u = printf "https:%s" $u }}{{ end }}
+  {{ $sameAs = $sameAs | append $u }}
+{{ end }}
+
+<title>{{ $title }}</title>
+
+<!-- Meta -->
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ $desc }}" />
+<meta name="author" content="{{ .Site.Params.author }}" />
+<meta name="keywords" content="{{ delimit $keywords ", " }}" />
+<meta name="robots" content="{{ $robots }}" />
+<link rel="canonical" href="{{ $canonical }}" />
+<link rel="alternate" type="text/plain" href="{{ $resumeTxtURL }}" title="Plain Text Resume" />
+{{ with .Site.Params.seo.googleSiteVerification }}{{ if ne . "" }}
+<meta name="google-site-verification" content="{{ . }}" />
+{{ end }}{{ end }}
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile" />
+<meta property="og:title" content="{{ $title }}" />
+<meta property="og:description" content="{{ $desc }}" />
+<meta property="og:url" content="{{ $canonical }}" />
+<meta property="og:image" content="{{ $ogImage }}" />
+<meta property="og:site_name" content="{{ .Site.Params.profile.name }}" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ $title }}" />
+<meta name="twitter:description" content="{{ $desc }}" />
+<meta name="twitter:image" content="{{ $ogImage }}" />
+
+<!-- Structured Data -->
+{{ $person := dict "@context" "https://schema.org" "@type" "Person" "name" $personName "jobTitle" $personJobTitle "url" $canonical "sameAs" $sameAs "knowsAbout" $knowsAbout }}
+<script type="application/ld+json">{{ $person | jsonify | safeJS }}</script>
+{{ with .Site.Params.seo.faq }}
+  {{ $faqEntities := slice }}
+  {{ range . }}
+    {{ $faqEntities = $faqEntities | append (dict "@type" "Question" "name" .question "acceptedAnswer" (dict "@type" "Answer" "text" .answer)) }}
+  {{ end }}
+  {{ $faqPage := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $faqEntities }}
+<script type="application/ld+json">{{ $faqPage | jsonify | safeJS }}</script>
+{{ end }}
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<meta name="theme-color" content="#006BB6" />
+
+<!-- Google Fonts -->
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Arial:300,400,500,700,900"
+/>
+<!-- Theme SCSS -->
+{{ $style := resources.Get "scss/devresume.scss" | resources.ExecuteAsTemplate
+"scss/devresume.scss" . | toCSS (dict "targetPath" "assets/css/devresume.css") |
+minify | fingerprint }}
+<link rel="stylesheet" href="{{ $style.Permalink }}" />

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+
+  <body>
+    <div class="main-wrapper">
+      <div class="container wider-container px-3 px-lg-5">
+        <article
+          class="resume-wrapper mx-auto theme-bg-light p-5 mb-5 my-5 shadow-lg"
+        >
+          {{ partial "header.html" . }}
+
+          <hr class="section-divider" />
+
+          {{ if .Site.Params.summary.enable }} {{ partial "summary.html" . }} {{
+          end }}
+
+          <hr class="section-divider" />
+
+          <div class="resume-body">
+            <div class="row resume-body-row">
+              <div class="resume-main col-12 col-lg-7 col-xl-8 pr-0 pr-lg-2">
+                {{ if .Site.Params.experience.enable }} {{ partial
+                "experience.html" . }} {{ end }} {{ if
+                .Site.Params.projects.enable }} {{ partial "projects.html" . }}
+                {{ end }} {{ if .Site.Params.information.enable }} {{ partial
+                "information.html" . }} {{ end }}
+              </div>
+              <!--//resume-main-->
+
+              {{ partial "sidebar.html" . }}
+            </div>
+            <!--//row-->
+          </div>
+          <!--//resume-body-->
+
+          <hr />
+
+          {{ if .Site.Params.social.enable }} {{ partial "social.html" . }} {{
+          end }}
+        </article>
+      </div>
+      <!--//container-->
+
+      {{ partial "footer.html" . }}
+    </div>
+    <!--//main-wrapper-->
+    {{ partial "scripts.html" . }}
+  </body>
+</html>

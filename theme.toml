@@ -1,0 +1,17 @@
+name = "cvnewtheme"
+license = "MIT"
+licenselink = "LICENSE.md"
+description = "A responsive Bootstrap resume and CV theme for Hugo."
+homepage = "https://example.invalid/cvnewtheme"
+tags = ["cv", "resume"]
+features = ["responsive"]
+min_version = "0.41"
+
+[author]
+  name = "YOUR_NAME"
+  homepage = "https://example.invalid/"
+
+[original]
+  name = "3rd Wave Media"
+  homepage = "https://themes.3rdwavemedia.com/bootstrap-templates/resume/devresume-free-bootstrap-4-resume-cv-template-for-developers/"
+  repo = "https://github.com/xriley/DevResume-Theme"

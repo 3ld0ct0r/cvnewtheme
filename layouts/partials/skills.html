@@ -1,0 +1,36 @@
+
+                            <section id="skills" class="skills-section py-3">
+
+                                <h3 class="text-uppercase resume-section-heading mb-4">{{ i18n "skills" }}</h3>
+
+                                {{ range .Site.Params.skills.list }}
+                                <div class="item skill-cluster">
+                                    <h4 class="item-title">{{ .title }}</h4>
+                                    <div class="resume-skills-inline" role="list">
+                                        {{ range .items }}
+                                        {{ with .details }}
+                                        {{ $compact := . }}
+                                        {{ $usingParts := split $compact " using " }}
+                                        {{ if gt (len $usingParts) 1 }}
+                                        {{ $compact = printf "%s: %s" (index $usingParts 0) (delimit (after 1 $usingParts) " using ") }}
+                                        {{ else }}
+                                        {{ $withParts := split $compact " with " }}
+                                        {{ if gt (len $withParts) 1 }}
+                                        {{ $compact = printf "%s: %s" (index $withParts 0) (delimit (after 1 $withParts) " with ") }}
+                                        {{ end }}
+                                        {{ end }}
+
+                                        {{ $colonParts := split $compact ": " }}
+                                        {{ if gt (len $colonParts) 1 }}
+                                        {{ $lead := index $colonParts 0 }}
+                                        {{ $body := delimit (after 1 $colonParts) ": " }}
+                                        {{ $compact = printf "%s: %s" $lead $body }}
+                                        {{ end }}
+                                        <span class="resume-skill-chip" role="listitem">{{ $compact | plainify }}</span>
+                                        {{ end }}
+                                        {{ end }}
+                                    </div>
+                                </div><!--//item-->
+                                {{ end }}
+
+                            </section><!--//skills-section-->

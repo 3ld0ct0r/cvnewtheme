@@ -1,0 +1,23 @@
+<div class="resume-contact col-12 col-lg-6 col-xl-6">
+  {{ $onlineCvURL := .Site.Params.seo.canonical | default .Site.BaseURL }}
+  <ul class="list-unstyled mb-0 resume-contact-list">
+    <li class="resume-contact-item">
+      <i class="fas fa-circle fa-fw fa-lg mr-2"></i
+      ><a class="resume-link" href="{{ $onlineCvURL | safeURL }}">Online CV</a>
+    </li>
+    {{ range .Site.Params.contact.list }}
+    {{ $isPdf := or (in (lower .text) "download pdf") (in (lower .url) ".pdf") }}
+    {{ if and (not (hasPrefix (lower .url) "mailto:")) (not $isPdf) }}
+    <li class="resume-contact-item">
+      <i class="{{ .icon }} fa-fw fa-lg mr-2"></i
+      ><a class="resume-link" href="{{ .url | safeURL }}">{{ .text }}</a>
+    </li>
+    {{ end }}
+    {{ end }}
+    <li class="resume-contact-item">
+      <i class="fas fa-map-marker-alt fa-fw fa-lg mr-2"></i>{{
+      .Site.Params.contact.location }}
+    </li>
+  </ul>
+</div>
+<!--//resume-contact-->

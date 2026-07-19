@@ -68,7 +68,7 @@ jobs:
           test "$(bun --version)" = "1.3.14"
           uv --version | grep --extended-regexp --quiet '^uv 0[.]11[.]29([[:space:]]|$)'
           test "$(python --version)" = "Python 3.14.6"
-          hugo version | grep --extended-regexp --quiet '^hugo v0[.]164[.]0(-[0-9a-f]+)?[+]extended([+[:space:]]|$)'
+          hugo version | grep --extended-regexp --quiet '^hugo v0[.]164[.]0(-[0-9a-f]{40})?[+]extended([+[:space:]]|$)'
 
       - name: Install locked dependencies
         run: |

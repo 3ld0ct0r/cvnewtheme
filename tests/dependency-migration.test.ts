@@ -15,6 +15,7 @@ import { tmpdir } from "node:os";
 import {
   assertExactHugoVersion,
   EXPECTED_HUGO_VERSION,
+  parseHugoVersion,
 } from "../scripts/hugo-version";
 
 const projectRoot = resolve(import.meta.dir, "..");
@@ -241,6 +242,29 @@ async function collectActiveSourceFiles(): Promise<string[]> {
 }
 
 describe("Bun-managed dependency and asset migration", () => {
+  test("parses official and vendored Hugo release version formats", () => {
+    const revision = "ce2470e7012b5ab5fc4e10ebe4027e9f8d9e00dc";
+
+    expect(
+      parseHugoVersion(
+        `hugo v0.164.0-${revision}+extended linux/amd64 BuildDate=2026-07-06T16:39:30Z`,
+      ),
+    ).toEqual({
+      capabilities: ["extended"],
+      revision,
+      version: EXPECTED_HUGO_VERSION,
+    });
+    expect(
+      parseHugoVersion("hugo v0.164.0+extended+withdeploy darwin/arm64"),
+    ).toEqual({
+      capabilities: ["extended", "withdeploy"],
+      version: EXPECTED_HUGO_VERSION,
+    });
+    expect(
+      parseHugoVersion("hugo v0.164.0-not-a-release-revision+extended linux/amd64"),
+    ).toBeNull();
+  });
+
   test("requires the exact Hugo Extended reference toolchain", async () => {
     const hugo = await assertExactHugoVersion(projectRoot);
 

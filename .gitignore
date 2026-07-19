@@ -1,3 +1,13 @@
 public
 
 theme
+
+node_modules
+
+.hugo_build.lock
+resources
+.cache
+.venv
+playwright-report
+test-results
+tmp/pdfs

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language.Locale }}">
   <head>
     {{ partial "head.html" . }}
   </head>
@@ -9,8 +9,9 @@
     <div class="main-wrapper">
       <div class="container wider-container px-3 px-lg-5">
         <article
-          class="resume-wrapper mx-auto theme-bg-light p-5 mb-5 my-5 shadow-lg"
+          class="resume-wrapper mx-auto bg-white p-5 mb-5 my-5 shadow-lg"
         >
+          {{ "<!--[if IE]>Icon geometry: Font Awesome Free 7.3.1 (CC BY 4.0).<![endif]-->" | safeHTML }}
           {{ partial "header.html" . }}
 
           <hr class="section-divider" />
@@ -22,7 +23,7 @@
 
           <div class="resume-body">
             <div class="row resume-body-row">
-              <div class="resume-main col-12 col-lg-7 col-xl-8 pr-0 pr-lg-2">
+              <div class="resume-main col-12 col-lg-7 col-xl-8 pe-0 pe-lg-2">
                 {{ if .Site.Params.experience.enable }} {{ partial
                 "experience.html" . }} {{ end }} {{ if
                 .Site.Params.projects.enable }} {{ partial "projects.html" . }}
@@ -37,15 +38,9 @@
           </div>
           <!--//resume-body-->
 
-          <hr />
-
-          {{ if .Site.Params.social.enable }} {{ partial "social.html" . }} {{
-          end }}
         </article>
       </div>
       <!--//container-->
-
-      {{ partial "footer.html" . }}
     </div>
     <!--//main-wrapper-->
     {{ partial "scripts.html" . }}

@@ -1,14 +1,14 @@
 <div class="resume-title col-12 col-lg-6 col-xl-6">
   <div class="resume-name-row">
-    <h2 class="resume-name mb-0 text-uppercase">
+    <h1 class="resume-name mb-0 text-uppercase">
       {{ .Site.Params.profile.name }}
-    </h2>
+    </h1>
   </div>
   {{ with .Site.Params.profile.tagline }}
   <div class="resume-tagline mb-1">{{ . }}</div>
   {{ end }}
   {{ with .Site.Params.profile.executiveHeadline }}
-  <div class="resume-executive-headline text-muted mb-0">{{ . }}</div>
+  <div class="resume-executive-headline text-body-secondary mb-0">{{ . }}</div>
   {{ end }}
 </div>
 <!--//resume-title-->

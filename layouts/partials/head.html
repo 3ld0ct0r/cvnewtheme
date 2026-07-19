@@ -8,12 +8,8 @@
 {{ $personJobTitle := .Site.Params.seo.personJobTitle | default .Site.Params.profile.tagline }}
 {{ $ogImage := (.Site.Params.seo.ogImage | default "assets/images/avatar.svg") | absURL }}
 {{ $resumeTxtURL := printf "%sresume.txt" $canonical }}
-{{ $sameAs := slice }}
-{{ range .Site.Params.social.list }}
-  {{ $u := .url }}
-  {{ if hasPrefix $u "//" }}{{ $u = printf "https:%s" $u }}{{ end }}
-  {{ $sameAs = $sameAs | append $u }}
-{{ end }}
+{{ $resumeLinks := partialCached "resume-links.html" . .Site.Language.Lang }}
+{{ $sameAs := $resumeLinks.sameAs }}
 
 <title>{{ $title }}</title>
 
@@ -57,16 +53,23 @@
 <script type="application/ld+json">{{ $faqPage | jsonify | safeJS }}</script>
 {{ end }}
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<meta name="theme-color" content="#006BB6" />
+<link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml" />
+<meta name="theme-color" content="#0066ae" />
 
-<!-- Google Fonts -->
+<link
+  rel="preload"
+  href="{{ "generated/fonts/cv-resume-sans-latin-normal.woff2" | relURL }}"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+
+<!-- Bun-built theme CSS -->
+{{ with resources.Get "generated/devresume.min.css" | fingerprint }}
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css?family=Arial:300,400,500,700,900"
+  href="{{ .RelPermalink }}"
+  integrity="{{ .Data.Integrity }}"
+  crossorigin="anonymous"
 />
-<!-- Theme SCSS -->
-{{ $style := resources.Get "scss/devresume.scss" | resources.ExecuteAsTemplate
-"scss/devresume.scss" . | toCSS (dict "targetPath" "assets/css/devresume.css") |
-minify | fingerprint }}
-<link rel="stylesheet" href="{{ $style.Permalink }}" />
+{{ end }}

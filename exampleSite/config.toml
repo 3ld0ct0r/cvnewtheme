@@ -1,15 +1,15 @@
-baseURL = "https://YOUR_SITE.example.invalid/"
-languageCode = "en"
+baseURL = "https://resume.example.invalid/"
+locale = "en"
 title = "YOUR_NAME | Resume"
 theme = "cvnewtheme"
 disableKinds = ["taxonomy", "term", "rss"]
 
 [params]
 author = "YOUR_NAME"
-description = "Replace this text with a concise professional summary."
+description = "A concise, evidence-led summary of your professional scope and results."
 
 [params.seo]
-canonical = "https://YOUR_SITE.example.invalid/"
+canonical = "https://resume.example.invalid/"
 robots = "noindex, nofollow"
 personName = "YOUR_NAME"
 personJobTitle = "YOUR_ROLE"
@@ -20,20 +20,58 @@ keywords = ["YOUR_SPECIALTY", "YOUR_DOMAIN"]
 enable = true
 name = "YOUR_NAME"
 tagline = "YOUR_ROLE | YOUR_SPECIALTY"
+executiveHeadline = "Technical leadership, resilient systems, measurable outcomes"
 
-[params.contact]
-enable = true
-location = "YOUR_CITY, YOUR_COUNTRY"
+[params.resumeLinks]
+header = ["online_cv", "website", "location"]
+actions = ["online_cv", "email", "pdf", "linkedin", "github"]
 
-[[params.contact.list]]
-icon = "fas fa-envelope"
-url = "mailto:YOUR_EMAIL@example.invalid"
-text = "YOUR_EMAIL@example.invalid"
+[params.resumeLinks.items.online_cv]
+kind = "online-cv"
+url = "https://resume.example.invalid/"
+text = "Online CV"
+label = "View online CV"
 
-[[params.contact.list]]
-icon = "fas fa-globe"
-url = "https://YOUR_SITE.example.invalid/"
-text = "YOUR_WEBSITE"
+[params.resumeLinks.items.website]
+kind = "website"
+url = "https://portfolio.example.invalid/"
+text = "portfolio.example.invalid"
+label = "Visit portfolio website"
+
+[params.resumeLinks.items.location]
+kind = "location"
+text = "YOUR_CITY, YOUR_COUNTRY"
+label = "Location: YOUR_CITY, YOUR_COUNTRY"
+
+[params.resumeLinks.items.email]
+kind = "email"
+url = "mailto:your.name@example.invalid"
+text = "your.name@example.invalid"
+label = "Email YOUR_NAME"
+
+[params.resumeLinks.items.pdf]
+kind = "pdf"
+url = "/resume.pdf"
+text = "Resume PDF"
+label = "Download resume PDF"
+
+[params.resumeLinks.items.linkedin]
+kind = "linkedin"
+url = "https://linkedin.example.invalid/your-profile"
+text = "LinkedIn"
+label = "View LinkedIn profile"
+
+[params.resumeLinks.items.github]
+kind = "github"
+url = "https://github.example.invalid/your-profile"
+text = "GitHub"
+label = "View GitHub profile"
+
+[params.resumeLinks.items.phone]
+kind = "phone"
+url = "tel:+1-555-0100"
+text = "+1 555 0100"
+label = "Call YOUR_NAME"
 
 [params.summary]
 enable = true
@@ -41,70 +79,194 @@ enable = true
 [[params.summary.list]]
 
 [[params.summary.list.items]]
-text = "Replace this item with a short summary of your experience, scope, and results."
+text = "Senior technical leader with broad ownership across architecture, delivery, and team development."
+
+[[params.summary.list.items]]
+text = "Builds dependable products and platforms for complex operational environments."
+
+[[params.summary.list]]
+
+[[params.summary.list.items]]
+text = "Representative outcomes include improved reliability, lower cost, and faster delivery."
+
+[[params.summary.list.items]]
+text = "Seeking a role where technical judgment and organizational leadership have visible impact."
 
 [params.experience]
 enable = true
 
 [[params.experience.list]]
-title = "YOUR_ROLE"
-dates = "START_DATE - END_DATE"
-company = "YOUR_COMPANY"
-location = "YOUR_CITY, YOUR_COUNTRY"
-details = "Replace this text with the purpose and scope of your role."
+title = "YOUR_ROLE_1"
+dates = "START_DATE_1 - PRESENT"
+company = "YOUR_COMPANY_1"
+location = "YOUR_CITY_1, YOUR_COUNTRY_1"
+details = "Led an *international résumé platform serving Łódź and Český Krumlov teams* across architecture, delivery, and operational quality."
 
 [[params.experience.list.items]]
-details = "Replace this item with a measurable result."
+details = "Improved a key reliability measure from BASELINE to RESULT."
+
+[[params.experience.list.items]]
+details = "Reduced recurring platform cost by RESULT through a targeted redesign."
+
+[[params.experience.list.items]]
+details = "Developed engineers and aligned delivery across PRODUCT, SECURITY, and OPERATIONS."
+
+[[params.experience.list]]
+title = "YOUR_ROLE_2"
+dates = "START_DATE_2 - END_DATE_2"
+company = "YOUR_COMPANY_2"
+location = "YOUR_CITY_2, YOUR_COUNTRY_2"
+details = "Owned the systems and working practices behind a high-volume customer product."
+
+[[params.experience.list.items]]
+details = "Delivered CAPABILITY with measurable adoption across SCALE users."
+
+[[params.experience.list.items]]
+details = "Shortened lead time by RESULT while maintaining service quality."
+
+[[params.experience.list.items]]
+details = "Introduced technical controls that reduced INCIDENT_CLASS events by RESULT."
+
+[[params.experience.list]]
+title = "YOUR_ROLE_3"
+dates = "START_DATE_3 - END_DATE_3"
+company = "YOUR_COMPANY_3"
+location = "YOUR_CITY_3, YOUR_COUNTRY_3"
+details = "Built foundational services and led delivery for an earlier-stage product portfolio."
+
+[[params.experience.list.items]]
+details = "Designed a reusable platform adopted by SCALE teams."
+
+[[params.experience.list.items]]
+details = "Migrated CRITICAL_WORKLOAD with no material customer interruption."
+
+[[params.experience.list.items]]
+details = "Established engineering standards for testing, observability, and ownership."
+
+[params.projects]
+enable = true
+
+[[params.projects.list]]
+title = "YOUR_PROJECT_1"
+meta = "YOUR_PROJECT_TYPE_1"
+tagline = "Solved a material business problem through a focused technical intervention and measurable result."
+
+[[params.projects.list]]
+title = "YOUR_PROJECT_2"
+meta = "YOUR_PROJECT_TYPE_2"
+tagline = "Created a reusable capability that improved delivery quality across multiple teams."
+
+[params.information]
+enable = true
+
+[[params.information.list]]
+title = "YOUR_INFORMATION_GROUP_1"
+details = "A compact group of additional evidence relevant to the target role."
+
+[[params.information.list.items]]
+details = "First supporting detail with scope and outcome."
+
+[[params.information.list.items]]
+details = "Second supporting detail with ownership and scale."
+
+[[params.information.list]]
+title = "YOUR_INFORMATION_GROUP_2"
+details = "A second group covering professional contribution outside primary roles."
+
+[[params.information.list.items]]
+details = "First supporting contribution."
+
+[[params.information.list.items]]
+details = "Second supporting contribution."
 
 [params.skills]
 enable = true
 
 [[params.skills.list]]
-title = "YOUR_SKILL_GROUP"
+title = "Architecture"
 
 [[params.skills.list.items]]
-details = "YOUR_SKILL_1. YOUR_SKILL_2. YOUR_SKILL_3."
+details = "Distributed systems. APIs. Data platforms. Reliability."
+
+[[params.skills.list.items]]
+details = "Cloud architecture. Security. Performance. Cost control."
+
+[[params.skills.list]]
+title = "Leadership"
+
+[[params.skills.list.items]]
+details = "Technical strategy. Team development. Hiring. Delivery."
+
+[[params.skills.list.items]]
+details = "Stakeholder alignment. Risk management. Incident leadership."
+
+[[params.skills.list]]
+title = "Delivery"
+
+[[params.skills.list.items]]
+details = "Product discovery. Roadmaps. Quality systems. Observability."
+
+[[params.skills.list.items]]
+details = "Continuous delivery. Platform engineering. Developer experience."
 
 [params.education]
 enable = true
 
 [[params.education.list]]
-degree = "YOUR_DEGREE"
-university = "YOUR_INSTITUTION"
-dates = "START_YEAR - END_YEAR"
+degree = "YOUR_DEGREE_1"
+university = "YOUR_INSTITUTION_1"
+dates = "START_YEAR_1 - END_YEAR_1"
+
+[[params.education.list]]
+degree = "YOUR_DEGREE_2"
+university = "YOUR_INSTITUTION_2"
+dates = "START_YEAR_2 - END_YEAR_2"
 
 [params.certifications]
 enable = true
 
 [[params.certifications.list]]
-name = "YOUR_CERTIFICATION"
-body = "YOUR_ISSUER"
-date = "YOUR_YEAR"
+name = "YOUR_CERTIFICATION_1"
+body = "YOUR_ISSUER_1"
+date = "YOUR_YEAR_1"
+
+[[params.certifications.list]]
+name = "YOUR_CERTIFICATION_2"
+body = "YOUR_ISSUER_2"
+date = "YOUR_YEAR_2"
 
 [params.awards]
-enable = false
-
-[params.languages]
-enable = false
-
-[params.interests]
-enable = false
-
-[params.projects]
-enable = false
-
-[params.information]
-enable = false
-
-[params.social]
 enable = true
 
-[[params.social.list]]
-icon = "fab fa-linkedin"
-url = "https://YOUR_PROFILE.example.invalid/"
-title = "YOUR_PROFESSIONAL_PROFILE"
+[[params.awards.list]]
+name = "YOUR_AWARD_1"
+body = "YOUR_AWARDING_ORGANIZATION_1"
+date = "YOUR_AWARD_YEAR_1"
 
-[[params.social.list]]
-icon = "fab fa-github-square"
-url = "https://YOUR_CODE_PROFILE.example.invalid/"
-title = "YOUR_CODE_PROFILE"
+[[params.awards.list]]
+name = "YOUR_AWARD_2"
+body = "YOUR_AWARDING_ORGANIZATION_2"
+date = "YOUR_AWARD_YEAR_2"
+
+[params.languages]
+enable = true
+
+[[params.languages.list]]
+name = "English"
+level = "Professional"
+
+[[params.languages.list]]
+name = "Čeština"
+level = "Conversational"
+
+[params.interests]
+enable = true
+
+[[params.interests.list]]
+name = "YOUR_INTEREST_1"
+
+[[params.interests.list]]
+name = "YOUR_INTEREST_2"
+
+[[params.interests.list]]
+name = "YOUR_INTEREST_3"

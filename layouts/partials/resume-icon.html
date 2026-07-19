@@ -1,0 +1,12 @@
+{{- $icon := .icon -}}
+{{- $class := .class | default "resume-icon" -}}
+<svg
+  class="{{ $class }}"
+  viewBox="{{ delimit $icon.viewBox " " }}"
+  aria-hidden="true"
+  focusable="false"
+>
+  {{- range $icon.paths }}
+  <path fill="currentColor" d="{{ . }}"></path>
+  {{- end }}
+</svg>

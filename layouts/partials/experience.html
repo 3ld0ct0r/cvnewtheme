@@ -1,24 +1,21 @@
 <section id="experience" class="work-section py-3">
-  <h3 class="text-uppercase resume-section-heading mb-4">
+  <h2 class="text-uppercase resume-section-heading mb-4">
     {{ i18n "experiences" }}
-  </h3>
+  </h2>
 
   {{ range .Site.Params.experience.list }}
   <div class="item mb-3">
     <div class="item-heading experience-heading mb-1">
-      <h4 class="item-title mb-0">
+      <h3 class="item-title mb-0">
         <span class="role-summary">
           <span class="company-name">{{ .company }}</span>
           <span class="meta-divider">|</span>
           <span class="role-name">{{ .title }}</span>
         </span>
-        <span class="role-dates">{{ .dates }}</span>
-      </h4>
+        <span class="role-dates resume-date">{{ .dates }}</span>
+      </h3>
       {{ with .location }}
       <div class="experience-location">
-        <span class="meta-icon location-meta-icon" aria-hidden="true">
-          <i class="fas fa-map-marker-alt"></i>
-        </span>
         <span class="role-location">{{ . }}</span>
       </div>
       {{ end }}

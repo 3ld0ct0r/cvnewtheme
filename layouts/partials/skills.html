@@ -1,11 +1,11 @@
 
                             <section id="skills" class="skills-section py-3">
 
-                                <h3 class="text-uppercase resume-section-heading mb-4">{{ i18n "skills" }}</h3>
+                                <h2 class="text-uppercase resume-section-heading mb-4">{{ i18n "skills" }}</h2>
 
                                 {{ range .Site.Params.skills.list }}
                                 <div class="item skill-cluster">
-                                    <h4 class="item-title">{{ .title }}</h4>
+                                    <h3 class="item-title">{{ .title }}</h3>
                                     <div class="resume-skills-inline" role="list">
                                         {{ range .items }}
                                         {{ with .details }}

@@ -1,0 +1,232 @@
+baseURL = "https://resume.example.invalid/"
+locale = "en"
+title = "Avery Morgan | Principal Platform Engineer"
+theme = "cvnewtheme"
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+author = "Avery Morgan"
+description = "Maximum-content acceptance fixture for the CV Resume theme."
+
+[params.seo]
+canonical = "https://resume.example.invalid/"
+robots = "noindex, nofollow"
+personName = "Avery Morgan"
+personJobTitle = "Principal Platform Engineer"
+keywords = ["distributed systems", "platform engineering"]
+
+[params.profile]
+enable = true
+name = "MAXIMUM CONTENT TOP"
+tagline = "Principal Platform Engineer | Distributed Systems"
+executiveHeadline = "Technical strategy, reliable delivery, measurable outcomes"
+
+[params.resumeLinks]
+header = ["online_cv", "website", "location"]
+actions = ["online_cv", "email", "pdf", "linkedin", "github"]
+
+[params.resumeLinks.items.online_cv]
+kind = "online-cv"
+url = "https://resume.example.invalid/"
+text = "Online CV"
+label = "View online CV"
+
+[params.resumeLinks.items.website]
+kind = "website"
+url = "https://avery.example.invalid/"
+text = "avery.example.invalid"
+label = "Visit Avery Morgan's website"
+
+[params.resumeLinks.items.location]
+kind = "location"
+text = "Bengaluru, India"
+label = "Location: Bengaluru, India"
+
+[params.resumeLinks.items.email]
+kind = "email"
+url = "mailto:avery@example.invalid"
+text = "avery@example.invalid"
+label = "Email Avery Morgan"
+
+[params.resumeLinks.items.pdf]
+kind = "pdf"
+url = "/resume.pdf"
+text = "Resume PDF"
+label = "Download resume PDF"
+
+[params.resumeLinks.items.linkedin]
+kind = "linkedin"
+url = "https://linkedin.example.invalid/in/avery-morgan"
+text = "LinkedIn"
+label = "View LinkedIn profile"
+
+[params.resumeLinks.items.github]
+kind = "github"
+url = "https://github.example.invalid/avery-morgan"
+text = "GitHub"
+label = "View GitHub profile"
+
+[params.resumeLinks.items.phone]
+kind = "phone"
+url = "tel:+918000000000"
+text = "+91 80000 00000"
+label = "Call Avery Morgan"
+
+[params.summary]
+enable = true
+
+[[params.summary.list]]
+[[params.summary.list.items]]
+text = "Platform leader with 16 years of experience designing dependable systems and guiding multidisciplinary teams."
+[[params.summary.list.items]]
+text = "Pairs architecture with hands-on delivery across cloud, data, security, and developer experience."
+
+[params.experience]
+enable = true
+
+[[params.experience.list]]
+title = "Principal Platform Engineer"
+dates = "2022 - Present"
+company = "Northstar Systems"
+location = "Bengaluru, India"
+details = "Set platform strategy for a global engineering group serving 140 product teams."
+[[params.experience.list.items]]
+details = "Reduced deployment lead time by 63% through paved-road delivery workflows."
+[[params.experience.list.items]]
+details = "Improved service availability from 99.91% to 99.98% with error-budget governance."
+[[params.experience.list.items]]
+details = "Cut infrastructure spend by 28% while absorbing 3.4× traffic growth."
+
+[[params.experience.list]]
+title = "Staff Software Engineer"
+dates = "2018 - 2022"
+company = "Meridian Cloud"
+location = "London, United Kingdom"
+details = "Led the event-platform modernization used by payments and risk products."
+[[params.experience.list.items]]
+details = "Migrated 11 billion daily events with no customer-visible interruption."
+[[params.experience.list.items]]
+details = "Established replay and schema controls that halved production incidents."
+[[params.experience.list.items]]
+details = "Mentored 18 engineers and supported six promotions."
+
+[[params.experience.list]]
+title = "Senior Software Engineer"
+dates = "2014 - 2018"
+company = "Atlas Commerce"
+location = "Dublin, Ireland"
+details = "Built resilient commerce services across catalogue, checkout, and fulfilment."
+[[params.experience.list.items]]
+details = "Delivered active-active order processing across three regions."
+[[params.experience.list.items]]
+details = "Raised automated recovery coverage from 34% to 87%."
+[[params.experience.list.items]]
+details = "Introduced *evidence-led reviews for Łódź and Český Krumlov teams*."
+
+[params.projects]
+enable = true
+
+[[params.projects.list]]
+title = "Project Lantern"
+meta = "Open source"
+tagline = "A policy-aware deployment planner adopted by 40 internal services."
+
+[[params.projects.list]]
+title = "Project Compass"
+meta = "Research"
+tagline = "A latency attribution model for multi-region request paths."
+
+[params.information]
+enable = true
+
+[[params.information.list]]
+title = "Selected leadership"
+details = "MAXIMUM CONTENT MIDDLE"
+[[params.information.list.items]]
+details = "Architecture council chair for reliability and data governance."
+
+[[params.information.list]]
+title = "Community"
+details = "Programme reviewer and technical mentor for regional engineering cohorts."
+[[params.information.list.items]]
+details = "Speaker on operability, platform boundaries, and sustainable delivery."
+
+[params.skills]
+enable = true
+
+[[params.skills.list]]
+title = "Architecture"
+[[params.skills.list.items]]
+details = "Distributed systems, domain modelling, event-driven design"
+
+[[params.skills.list]]
+title = "Platform"
+[[params.skills.list.items]]
+details = "Kubernetes, service mesh, observability, policy as code"
+
+[[params.skills.list]]
+title = "Leadership"
+[[params.skills.list.items]]
+details = "Technical strategy, coaching, incident learning, executive communication"
+
+[params.education]
+enable = true
+
+[[params.education.list]]
+degree = "MSc, Distributed Systems"
+university = "Trinity College Dublin"
+dates = "2012 - 2014"
+
+[[params.education.list]]
+degree = "BEng, Computer Science"
+university = "University of Bristol"
+dates = "2008 - 2012"
+
+[params.certifications]
+enable = true
+
+[[params.certifications.list]]
+name = "Cloud Security Professional"
+body = "Independent Security Consortium"
+date = "2025"
+
+[[params.certifications.list]]
+name = "Kubernetes Administrator"
+body = "Cloud Native Computing Foundation"
+date = "2024"
+
+[params.awards]
+enable = true
+
+[[params.awards.list]]
+name = "Engineering Impact Award"
+body = "Northstar Systems"
+date = "2025"
+
+[[params.awards.list]]
+name = "Reliability Leadership Award"
+body = "Meridian Cloud"
+date = "MAXIMUM CONTENT FINAL"
+
+[params.languages]
+enable = true
+
+[[params.languages.list]]
+name = "English"
+level = "Fluent"
+
+[[params.languages.list]]
+name = "Polish: Zażółć gęślą jaźń"
+level = "Conversational"
+
+[params.interests]
+enable = true
+
+[[params.interests.list]]
+name = "Distance running"
+
+[[params.interests.list]]
+name = "Street photography"
+
+[[params.interests.list]]
+name = "Systems history"

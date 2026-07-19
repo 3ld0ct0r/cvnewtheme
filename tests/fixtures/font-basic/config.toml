@@ -1,0 +1,99 @@
+baseURL = "https://font-basic.example.invalid/"
+locale = "en"
+title = "Font Basic Fixture"
+theme = "cvnewtheme"
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+author = "Alex Smith"
+description = "Latin normal-font loading fixture."
+
+[params.seo]
+canonical = "https://font-basic.example.invalid/"
+robots = "noindex, nofollow"
+personName = "Alex Smith"
+personJobTitle = "Engineer"
+keywords = ["engineering"]
+
+[params.profile]
+enable = true
+name = "Alex Smith"
+tagline = "Software Engineer"
+
+[params.resumeLinks]
+header = ["online_cv", "website", "location"]
+actions = ["online_cv", "email", "linkedin", "github"]
+
+[params.resumeLinks.items.online_cv]
+kind = "online-cv"
+url = "https://font-basic.example.invalid/"
+text = "Online CV"
+label = "View online CV"
+
+[params.resumeLinks.items.website]
+kind = "website"
+url = "https://alex.example.invalid/"
+text = "alex.example.invalid"
+label = "Visit website"
+
+[params.resumeLinks.items.location]
+kind = "location"
+text = "London, United Kingdom"
+label = "Location: London, United Kingdom"
+
+[params.resumeLinks.items.email]
+kind = "email"
+url = "mailto:alex@example.invalid"
+text = "alex@example.invalid"
+label = "Email Alex Smith"
+
+[params.resumeLinks.items.linkedin]
+kind = "linkedin"
+url = "https://linkedin.example.invalid/in/alex-smith"
+text = "LinkedIn"
+label = "View LinkedIn profile"
+
+[params.resumeLinks.items.github]
+kind = "github"
+url = "https://github.example.invalid/alex-smith"
+text = "GitHub"
+label = "View GitHub profile"
+
+[params.summary]
+enable = true
+[[params.summary.list]]
+[[params.summary.list.items]]
+text = "Builds reliable software for product teams."
+
+[params.experience]
+enable = true
+[[params.experience.list]]
+title = "Software Engineer"
+dates = "2020 - Present"
+company = "Example Systems"
+location = "London"
+details = "Delivers dependable services and clear operational tooling."
+[[params.experience.list.items]]
+details = "Improved release reliability and reduced recovery time."
+
+[params.skills]
+enable = true
+[[params.skills.list]]
+title = "Engineering"
+[[params.skills.list.items]]
+details = "Systems design, testing, delivery"
+
+[params.education]
+enable = false
+[params.certifications]
+enable = false
+[params.awards]
+enable = false
+[params.languages]
+enable = false
+[params.interests]
+enable = false
+[params.projects]
+enable = false
+[params.information]
+enable = false

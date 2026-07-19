@@ -1,5 +1,5 @@
 /*!
- * Template Name: DevResume - Bootstrap 4 Resume/CV Template for Software Developers
+ * Template Name: DevResume - Bootstrap 5 Resume/CV Template for Software Developers
  * Version: 1.0
  * Author: Xiaoying Riley
  * Copyright: 3rd Wave Media
@@ -8,40 +8,55 @@
  * Website: http://themes.3rdwavemedia.com/
 */
 
+@use "sass:color";
+
 /*************************** Theme Colours****************************/
 $theme-color-primary: #0066ae;
-$theme-accent-muted: #6f8498;
+$theme-text-color-muted: #5b7186;
+$theme-icon-muted: #6f8498;
 $theme-text-color-primary: #1f2328;
-$theme-text-color-secondary: lighten($theme-text-color-primary, 18%);
-$theme-text-color-light: lighten($theme-text-color-primary, 40%);
-$theme-border-color: lighten($theme-text-color-primary, 62%);
+$theme-text-color-secondary: color.adjust($theme-text-color-primary, $lightness: 18%, $space: hsl);
+$theme-text-color-light: color.adjust($theme-text-color-primary, $lightness: 40%, $space: hsl);
+$theme-border-color: color.adjust($theme-text-color-primary, $lightness: 62%, $space: hsl);
 
 /*************************** Variables Section. *****************************/
-$gray-100: lighten($theme-text-color-primary, 60%);
-$gray-200: lighten($theme-text-color-primary, 55%);
-$gray-300: lighten($theme-text-color-primary, 50%);
-$gray-400: lighten($theme-text-color-primary, 45%);
-$gray-500: lighten($theme-text-color-primary, 40%);
-$gray-600: lighten($theme-text-color-primary, 30%);
-$gray-700: lighten($theme-text-color-primary, 20%);
-$gray-800: lighten($theme-text-color-primary, 10%);
+$gray-100: color.adjust($theme-text-color-primary, $lightness: 60%, $space: hsl);
+$gray-200: color.adjust($theme-text-color-primary, $lightness: 55%, $space: hsl);
+$gray-300: color.adjust($theme-text-color-primary, $lightness: 50%, $space: hsl);
+$gray-400: color.adjust($theme-text-color-primary, $lightness: 45%, $space: hsl);
+$gray-500: color.adjust($theme-text-color-primary, $lightness: 40%, $space: hsl);
+$gray-600: color.adjust($theme-text-color-primary, $lightness: 30%, $space: hsl);
+$gray-700: color.adjust($theme-text-color-primary, $lightness: 20%, $space: hsl);
+$gray-800: color.adjust($theme-text-color-primary, $lightness: 10%, $space: hsl);
 $gray-900: $theme-text-color-primary;
 
-$theme-colors: (
-	"primary": $theme-color-primary,
-	"secondary": $theme-text-color-secondary,
-);
-
 /*************************** Import Bootstrap  *****************************/
-@import "bootstrap/scss/bootstrap.scss";
+@use "bootstrap/scss/bootstrap" with (
+	$primary: $theme-color-primary,
+	$secondary: $theme-text-color-secondary,
+	$body-secondary-color: $theme-text-color-muted,
+	$grid-gutter-width: 30px,
+	$link-decoration: none,
+	$link-hover-decoration: underline,
+	$hr-color: #000,
+	$hr-opacity: 0.1
+);
 
 /*************************** DevResume Styles ****************************/
 
 /*********** Theme Generic **********/
 body {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	color: $theme-text-color-secondary;
+	color: $theme-text-color-primary;
+	font-family: "CV Resume Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-size: 0.825rem;
+	font-stretch: 100%;
+	font-synthesis: none;
+	line-height: 1.45;
+}
+
+b,
+strong {
+	font-weight: 700;
 }
 
 h1,
@@ -52,19 +67,31 @@ h5,
 h6 {
 	color: $theme-text-color-primary;
 	font-weight: 700;
+	text-wrap: balance;
+}
+
+p,
+li {
+	text-wrap: pretty;
 }
 
 a.theme-link {
 	color: $theme-text-color-primary;
 	text-decoration: underline;
-	-webkit-text-decoration-color: rgba($theme-text-color-primary, 0.3);
-	text-decoration-color: rgba($theme-text-color-primary, 0.3);
+	-webkit-text-decoration-color: color.change($theme-text-color-primary, $alpha: 0.3);
+	text-decoration-color: color.change($theme-text-color-primary, $alpha: 0.3);
 
 	&:hover {
 		color: $theme-color-primary;
-		-webkit-text-decoration-color: rgba($theme-color-primary, 0.8);
-		text-decoration-color: rgba($theme-color-primary, 0.8);
+		-webkit-text-decoration-color: color.change($theme-color-primary, $alpha: 0.8);
+		text-decoration-color: color.change($theme-color-primary, $alpha: 0.8);
 	}
+}
+
+a:focus-visible {
+	border-radius: 0.15rem;
+	outline: 2px solid $theme-color-primary;
+	outline-offset: 2px;
 }
 
 .btn {
@@ -72,11 +99,6 @@ a.theme-link {
 	font-weight: 700;
 	height: 2rem;
 	padding: 0.35rem 0.8rem;
-}
-
-.btn:focus,
-.btn.focus {
-	box-shadow: none !important;
 }
 
 .btn-primary {
@@ -92,8 +114,14 @@ a.theme-link {
 }
 
 /*********** Resume **********/
+.main-wrapper {
+	background-color: #f8f9fa;
+	display: flow-root;
+	min-height: 100vh;
+}
+
 .resume-wrapper {
-	border: 1px solid rgba(0, 0, 0, 0.025);
+	border: 0;
 }
 
 .section-divider {
@@ -101,26 +129,16 @@ a.theme-link {
 }
 
 .resume-section-heading {
-	position: relative;
-	padding-left: 0.72rem;
+	border-bottom: 1px solid color.change($theme-color-primary, $alpha: 0.38);
+	display: inline-block;
+	padding-bottom: 0.12rem;
 	color: $theme-color-primary;
 	font-size: 1rem;
-	font-variant-caps: all-small-caps;
+	font-variant-caps: normal;
 	font-weight: 700;
-	letter-spacing: 0.032rem;
+	letter-spacing: 0.045em;
 	line-height: 1.14;
-	text-transform: none !important;
-
-	&:before {
-		content: "";
-		display: inline-block;
-		width: 4px;
-		height: 100%;
-		background: $theme-color-primary;
-		left: 0;
-		position: absolute;
-		top: 0;
-	}
+	text-transform: uppercase;
 }
 
 .resume-header {
@@ -152,31 +170,14 @@ a.theme-link {
 .resume-name {
 	color: $theme-color-primary;
 	font-size: 0.98rem;
-	font-weight: 900;
-	letter-spacing: 0.13rem;
+	font-weight: 800;
+	letter-spacing: 0.04em;
 	line-height: 1.03;
 	white-space: nowrap;
 }
 
-.resume-name-social {
-	align-items: center;
-	display: inline-flex;
-	gap: 0.28rem;
-	margin-left: 0.08rem;
-}
-
-.resume-name-social .resume-link {
-	align-items: center;
-	display: inline-flex;
-}
-
-.resume-name-social i,
-.resume-name-social .svg-inline--fa {
-	font-size: 0.83rem;
-}
-
 .resume-tagline {
-	color: darken($theme-text-color-secondary, 6%);
+	color: color.adjust($theme-text-color-secondary, $lightness: -6%, $space: hsl);
 	font-size: 0.94rem;
 	font-weight: 400;
 	line-height: 1.15;
@@ -184,17 +185,22 @@ a.theme-link {
 }
 
 .resume-executive-headline {
-	font-size: 0.63rem;
+	font-size: 0.75rem;
 	font-weight: 600;
-	font-variant-caps: all-small-caps;
-	letter-spacing: 0.08rem;
+	font-variant-caps: normal;
+	letter-spacing: 0.045em;
 	line-height: 1.25;
+	text-transform: uppercase;
 }
 
 .resume-contact {
 	border-left: 1px solid rgba(0, 0, 0, 0.08);
-	font-size: 0.7rem;
+	font-size: 0.75rem;
+	font-stretch: 96%;
+	font-style: normal;
+	font-weight: 500;
 	line-height: 1.15;
+	min-width: 0;
 	padding-left: 0.5rem !important;
 }
 
@@ -205,23 +211,36 @@ a.theme-link {
 	gap: 0.5rem;
 	justify-content: flex-start;
 	margin-bottom: 0 !important;
-	white-space: nowrap;
+	min-width: 0;
 }
 
 .resume-contact-item {
 	align-items: center;
 	display: inline-flex;
 	margin: 0 !important;
+	max-width: 100%;
+	min-width: 0;
 }
 
-.resume-contact-item i,
-.resume-contact-item .svg-inline--fa {
-	font-size: 0.76rem !important;
-	margin-right: 0.16rem !important;
+.resume-contact-item > .resume-link,
+.resume-location-text {
+	overflow-wrap: anywhere;
 }
 
-a.resume-link {
-	color: $theme-text-color-secondary;
+.resume-contact-icon {
+	color: $theme-icon-muted;
+	flex: 0 0 auto;
+	height: 0.82rem;
+	margin-right: 0.18rem;
+	width: 0.82rem;
+}
+
+.resume-contact-item[data-resume-kind="location"] .resume-contact-icon {
+	color: $theme-color-primary;
+}
+
+a.resume-link:not(.resume-action-link) {
+	color: $theme-color-primary;
 
 	&:hover {
 		color: $theme-color-primary;
@@ -233,7 +252,7 @@ a.resume-link {
 }
 
 .resume-intro {
-	font-size: 0.76rem;
+	font-size: 0.825rem;
 	padding-bottom: 0.16rem;
 }
 
@@ -254,7 +273,6 @@ a.resume-link {
 	}
 
 	.summary-line {
-		color: $theme-text-color-secondary;
 		line-height: 1.28;
 		margin: 0;
 	}
@@ -267,7 +285,6 @@ a.resume-link {
 
 .summary-merged {
 	.summary-line {
-		color: $theme-text-color-secondary;
 		line-height: 1.34;
 		margin: 0 0 0.22rem 0;
 	}
@@ -288,11 +305,11 @@ a.resume-link {
 	}
 
 	.item-meta {
-		font-size: 0.69rem;
+		font-size: 0.75rem;
 	}
 
 	.item-content {
-		font-size: 0.8rem;
+		font-size: 0.825rem;
 	}
 
 	.work-section .item-content,
@@ -331,7 +348,7 @@ a.resume-link {
 		column-gap: 0.75rem;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) auto;
-		font-size: 0.82rem;
+		font-size: 0.825rem;
 		font-weight: 600;
 		line-height: 1.26;
 		row-gap: 0.08rem;
@@ -347,51 +364,52 @@ a.resume-link {
 
 	.experience-heading .company-name {
 		color: $theme-color-primary;
-		font-size: 0.99em;
+		font-size: 1em;
 		font-weight: 800;
 		letter-spacing: 0.01rem;
 		line-height: 1.1;
 	}
 
 	.experience-heading .role-name {
-		color: $theme-accent-muted;
-		font-weight: 700;
-		font-size: 0.95em;
+		color: $theme-text-color-muted;
+		font-weight: 600;
+		font-size: 1em;
 		letter-spacing: 0.004rem;
 		line-height: 1.1;
 	}
 
 	.experience-heading .role-separator {
-		color: $theme-accent-muted;
+		color: $theme-text-color-muted;
 		font-weight: 600;
 		line-height: 1.1;
 	}
 
 	.experience-heading .meta-icon {
 		align-items: center;
-		color: $theme-accent-muted;
+		color: $theme-icon-muted;
 		display: inline-flex;
 		font-size: 0.72em;
 		line-height: 1;
 		transform: translateY(-0.01em);
 	}
 
-	.experience-heading .meta-icon .svg-inline--fa {
+	.experience-heading .meta-icon .resume-icon {
 		height: 0.95em;
 		width: 0.95em;
 	}
 
 	.experience-heading .meta-divider {
-		color: $theme-accent-muted;
-		font-weight: 300;
+		color: $theme-text-color-muted;
+		font-weight: 400;
 		line-height: 1.1;
 		padding: 0 0.05rem;
 	}
 
 	.experience-heading .role-dates,
 	.experience-heading .role-location {
-		color: darken($theme-text-color-light, 12%);
-		font-size: 0.9em;
+		color: $theme-text-color-muted;
+		font-size: 0.75rem;
+		font-stretch: 97.5%;
 		font-weight: 500;
 		line-height: 1.1;
 	}
@@ -443,10 +461,11 @@ a.resume-link {
 		margin: 0;
 	}
 
-	.resume-list strong {
-		color: $theme-text-color-primary;
-		font-weight: 700;
-	}
+}
+
+.resume-date {
+	font-variant-numeric: lining-nums tabular-nums;
+	font-weight: 500;
 }
 
 .resume-aside {
@@ -469,7 +488,8 @@ a.resume-link {
 	}
 
 	.item {
-		font-size: 0.7rem;
+		font-size: 0.75rem;
+		font-stretch: 97.5%;
 		line-height: 1.34;
 	}
 
@@ -478,24 +498,9 @@ a.resume-link {
 		font-weight: 700;
 	}
 
-	.resume-social-icons {
-		margin-bottom: 1.1rem;
-	}
-
-	.resume-social-icons .resume-link {
-		display: inline-block;
-		color: $theme-accent-muted;
-		transition: color 0.18s ease;
-	}
-
-	.resume-social-icons .resume-link:hover {
-		color: $theme-color-primary;
-	}
-
-	.resume-social-icons .resume-link i,
-	.resume-social-icons .resume-link .svg-inline--fa {
-		font-size: 1.4rem;
-		color: inherit !important;
+	.resume-metadata {
+		font-stretch: 97.5%;
+		font-weight: 500;
 	}
 
 	.skills-section .skill-cluster {
@@ -516,7 +521,7 @@ a.resume-link {
 	.skills-section .skill-cluster .item-title {
 		color: $theme-color-primary;
 		font-size: 0.75rem;
-		font-weight: 700;
+		font-weight: 600;
 		letter-spacing: 0.01rem;
 		margin-top: 0.32rem;
 		margin-bottom: 0.16rem;
@@ -536,13 +541,13 @@ a.resume-link {
 	.skills-section .resume-skill-chip {
 		align-items: baseline;
 		display: inline-flex;
-		font-size: 0.7rem;
+		font-size: 0.75rem;
 		line-height: 1.44;
 		white-space: normal;
 	}
 
 	.skills-section .resume-skill-chip::before {
-		color: rgba($theme-text-color-primary, 0.92);
+		color: color.change($theme-text-color-primary, $alpha: 0.92);
 		content: "\2022";
 		display: inline-block;
 		font-size: 0.82em;
@@ -551,10 +556,114 @@ a.resume-link {
 	}
 }
 
+.resume-actions {
+	margin-bottom: 0.72rem;
+}
+
+.resume-actions-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.resume-action-item {
+	margin: 0;
+	position: relative;
+}
+
+.resume-action-link {
+	align-items: center;
+	border-radius: 0.5rem;
+	color: $theme-icon-muted;
+	display: inline-flex;
+	height: 2.5rem;
+	justify-content: center;
+	position: relative;
+	text-decoration: none;
+	transition: background-color 160ms ease-out, color 160ms ease-out;
+	width: 2.5rem;
+
+	&:hover {
+		background: color.change($theme-color-primary, $alpha: 0.08);
+		color: $theme-color-primary;
+		text-decoration: none;
+	}
+
+	&:focus-visible {
+		background: color.change($theme-color-primary, $alpha: 0.08);
+		border-radius: 0.5rem;
+		color: $theme-color-primary;
+		outline: 2px solid $theme-color-primary;
+		outline-offset: 2px;
+	}
+}
+
+.resume-action-icon {
+	height: 1.1rem;
+	width: 1.1rem;
+}
+
+.resume-action-tooltip {
+	background: $theme-text-color-primary;
+	border-radius: 0.25rem;
+	bottom: calc(100% + 0.35rem);
+	color: #fff;
+	font-size: 0.75rem;
+	font-stretch: 100%;
+	font-weight: 500;
+	left: 50%;
+	line-height: 1.2;
+	max-width: min(16rem, calc(100vw - 1rem));
+	opacity: 0;
+	padding: 0.3rem 0.45rem;
+	pointer-events: none;
+	position: absolute;
+	text-align: center;
+	transform: translate(-50%, 0.2rem);
+	transition: opacity 140ms ease-out, transform 140ms ease-out;
+	visibility: hidden;
+	white-space: normal;
+	width: max-content;
+	z-index: 1080;
+}
+
+.resume-action-item:nth-child(-n + 2) .resume-action-tooltip {
+	left: 0;
+	transform: translate(0, 0.2rem);
+}
+
+.resume-action-item:nth-last-child(-n + 2) .resume-action-tooltip {
+	left: auto;
+	right: 0;
+	transform: translate(0, 0.2rem);
+}
+
+.resume-action-link:hover .resume-action-tooltip,
+.resume-action-link:focus-visible .resume-action-tooltip {
+	opacity: 1;
+	transform: translate(-50%, 0);
+	visibility: visible;
+}
+
+.resume-action-item:nth-child(-n + 2) .resume-action-link:hover .resume-action-tooltip,
+.resume-action-item:nth-child(-n + 2) .resume-action-link:focus-visible .resume-action-tooltip,
+.resume-action-item:nth-last-child(-n + 2) .resume-action-link:hover .resume-action-tooltip,
+.resume-action-item:nth-last-child(-n + 2) .resume-action-link:focus-visible .resume-action-tooltip {
+	transform: translate(0, 0);
+}
+
+.resume-icon {
+	display: block;
+	fill: currentColor;
+}
+
 .resume-education-list,
 .resume-awards-list,
 .resume-certifications-list {
-	font-size: 0.76rem;
+	font-size: 0.75rem;
 	margin-bottom: 0;
 }
 
@@ -570,32 +679,12 @@ a.resume-link {
 
 .resume-degree-time-org,
 .resume-degree-time {
-	font-size: 0.7rem;
+	font-size: 0.75rem;
 }
 
 .resume-lang-list,
 .resume-interests-list {
-	font-size: 0.76rem;
-}
-
-.resume-social-list {
-	font-size: 0.68rem;
-}
-
-.fa-heart {
-	color: #fb866a;
-}
-
-.fa-envelope,
-.fa-file-pdf,
-.fa-map-marker-alt,
-.fa-phone-square,
-.fa-phone {
-	color: $theme-accent-muted;
-}
-
-.fa-map-marker-alt {
-	color: $theme-color-primary;
+	font-size: 0.75rem;
 }
 
 .resume-list {
@@ -608,7 +697,7 @@ a.resume-link {
 	}
 
 	li::marker {
-		color: $theme-accent-muted;
+		color: $theme-icon-muted;
 		font-size: 0.72rem;
 	}
 }
@@ -638,6 +727,12 @@ a.resume-link {
 
 // Small devices (landscape phones, less than 768px)
 @media (max-width: 767.98px) {
+	.resume-wrapper {
+		margin-bottom: 1rem !important;
+		margin-top: 1rem !important;
+		padding: 1rem !important;
+	}
+
 	.resume-contact {
 		border-left: 0;
 		padding-left: 0;
@@ -648,11 +743,11 @@ a.resume-link {
 	}
 
 	.resume-tagline {
-		font-size: 0.83rem;
+		font-size: 0.825rem;
 	}
 
 	.resume-executive-headline {
-		font-size: 0.6rem;
+		font-size: 0.75rem;
 	}
 
 	.section-divider {
@@ -675,7 +770,7 @@ a.resume-link {
 	}
 
 	.work-section .experience-heading .item-meta {
-		font-size: 0.62rem;
+		font-size: 0.75rem;
 	}
 
 	.work-section .experience-heading .role-dates {
@@ -691,7 +786,14 @@ a.resume-link {
 
 @media (min-width: 992px) {
 	.resume-main {
+		flex: 0 0 60%;
+		max-width: 60%;
 		padding-right: 0.18rem !important;
+	}
+
+	.resume-aside {
+		flex: 0 0 40%;
+		max-width: 40%;
 	}
 
 	.resume-aside .skills-section .resume-skills-inline {
@@ -728,19 +830,6 @@ a.resume-link {
 	}
 }
 
-// Slightly widen the right sidebar (skills/education/certifications) on wide screens.
-@media (min-width: 1200px) {
-	.resume-body .resume-main {
-		flex: 0 0 60%;
-		max-width: 60%;
-	}
-
-	.resume-body .resume-aside {
-		flex: 0 0 40%;
-		max-width: 40%;
-	}
-}
-
 // Keep print layout aligned with desktop width/proportions, not responsive/mobile collapse.
 @media print {
 	@page {
@@ -760,11 +849,26 @@ a.resume-link {
 		padding-right: 0 !important;
 	}
 
+	body,
+	.main-wrapper {
+		background: #fff !important;
+	}
+
+	body {
+		font-size: 8.75pt !important;
+		line-height: 1.28 !important;
+	}
+
+	p {
+		orphans: 2;
+		widows: 2;
+	}
+
 	.resume-wrapper {
 		border: 0 !important;
 		box-shadow: none !important;
 		margin: 0 !important;
-		padding: 1.15rem !important;
+		padding: 0.58rem !important;
 	}
 
 	.resume-body .row.resume-body-row {
@@ -790,7 +894,7 @@ a.resume-link {
 	.resume-contact {
 		border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
 		flex: 0 0 46% !important;
-		font-size: 0.7rem !important;
+		font-size: 8pt !important;
 		max-width: 46% !important;
 		padding-left: 0.28rem !important;
 		padding-right: 0 !important;
@@ -826,7 +930,7 @@ a.resume-link {
 
 	.resume-name {
 		font-size: 0.98rem !important;
-		letter-spacing: 0.13rem !important;
+		letter-spacing: 0.04em !important;
 		white-space: nowrap !important;
 	}
 
@@ -837,27 +941,178 @@ a.resume-link {
 		justify-content: flex-start !important;
 	}
 
-	.resume-contact-item i,
-	.resume-contact-item .svg-inline--fa {
-		font-size: 0.76rem !important;
-		margin-right: 0.16rem !important;
+	.resume-contact-icon {
+		height: 8pt !important;
+		margin-right: 0.12rem !important;
+		width: 8pt !important;
+	}
+
+	.resume-actions {
+		margin-bottom: 0.18rem !important;
+	}
+
+	.resume-actions-list {
+		gap: 0.24rem !important;
+	}
+
+	.resume-action-link {
+		background: transparent !important;
+		border-radius: 0 !important;
+		color: $theme-icon-muted !important;
+		height: 0.95rem !important;
+		outline: 0 !important;
+		width: 0.95rem !important;
+	}
+
+	.resume-action-icon {
+		height: 0.82rem !important;
+		width: 0.82rem !important;
+	}
+
+	.resume-action-tooltip,
+	[data-pdf-action] {
+		display: none !important;
 	}
 
 	.section-divider {
-		margin: 0.78rem 0 !important;
+		margin: 0.34rem 0 !important;
 	}
 
 	.resume-main section {
-		padding-bottom: 0.56rem !important;
-		padding-top: 0.6rem !important;
+		padding-bottom: 0.22rem !important;
+		padding-top: 0.28rem !important;
 	}
 
 	.resume-aside section {
-		padding-bottom: 0.52rem !important;
-		padding-top: 0.5rem !important;
+		padding-bottom: 0.2rem !important;
+		padding-top: 0.24rem !important;
 	}
 
 	.work-section .item {
-		margin-bottom: 0.9rem !important;
+		margin-bottom: 0.48rem !important;
+	}
+
+	.work-section .item + .item {
+		margin-top: 0.12rem !important;
+	}
+
+	.work-section .item-content {
+		font-size: 8.75pt !important;
+		line-height: 1.3 !important;
+		margin-top: 0.14rem !important;
+	}
+
+	.work-section .experience-summary {
+		margin-bottom: 0.2rem !important;
+	}
+
+	.work-section .resume-list {
+		margin-top: 0.1rem !important;
+	}
+
+	.work-section .resume-list li {
+		margin-bottom: 0.1rem !important;
+	}
+
+	.project-section .item {
+		margin-bottom: 0.38rem !important;
+	}
+
+	.project-section .item-heading {
+		margin-bottom: 0.1rem !important;
+	}
+
+	.project-section .item-content {
+		font-size: 8.75pt !important;
+		line-height: 1.28 !important;
+	}
+
+	.project-section .item-content p,
+	.project-section .resume-skills-list {
+		margin-bottom: 0.1rem !important;
+	}
+
+	.project-section .resume-skills-list li {
+		margin-bottom: 0.08rem !important;
+	}
+
+	.resume-main .resume-section-heading,
+	.resume-aside .resume-section-heading {
+		margin-bottom: 0.24rem !important;
+	}
+
+	.resume-aside section + section {
+		margin-top: 0.08rem !important;
+	}
+
+	.resume-aside .skills-section .skill-cluster {
+		margin-bottom: 0.2rem !important;
+	}
+
+	.resume-aside .skills-section .skill-cluster + .skill-cluster {
+		margin-top: 0 !important;
+		padding-top: 0.12rem !important;
+	}
+
+	.resume-aside .skills-section .skill-cluster .item-title {
+		margin-bottom: 0.06rem !important;
+		margin-top: 0.1rem !important;
+	}
+
+	.resume-aside .skills-section .resume-skill-chip {
+		line-height: 1.22 !important;
+	}
+
+	.resume-education-list li,
+	.resume-certifications-list li {
+		margin-bottom: 0.18rem !important;
+	}
+
+	.resume-main .item-meta,
+	.resume-aside .item,
+	.resume-education-list,
+	.resume-awards-list,
+	.resume-certifications-list,
+	.resume-degree-time-org,
+	.resume-degree-time,
+	.resume-lang-list,
+	.resume-interests-list,
+	.skills-section .resume-skill-chip {
+		font-size: 8pt !important;
+	}
+
+	.work-section .item,
+	.project-section .item,
+	.resume-aside .item,
+	.resume-education-list li,
+	.resume-certifications-list li,
+	.resume-awards-list li,
+	.resume-lang-list li,
+	.resume-interests-list li {
+		break-inside: avoid;
+	}
+
+	.resume-section-heading {
+		break-after: avoid-page;
+	}
+}
+
+@media (forced-colors: active) {
+	.resume-action-link,
+	.resume-contact-icon,
+	.resume-icon {
+		color: LinkText;
+		forced-color-adjust: auto;
+	}
+
+	.resume-action-link:focus-visible {
+		outline-color: Highlight;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.resume-action-link,
+	.resume-action-tooltip {
+		transition: none;
 	}
 }

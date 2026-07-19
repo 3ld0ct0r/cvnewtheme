@@ -1,0 +1,317 @@
+{{- $prefix := "resumeLinks:" -}}
+{{- $supportedKinds := slice "online-cv" "email" "pdf" "linkedin" "github" "website" "location" "phone" -}}
+{{- $identityKinds := slice "website" "linkedin" "github" -}}
+{{- $sameAsKinds := slice "website" "linkedin" "github" -}}
+
+{{- $rawRegistry := .Site.Params.resumeLinks -}}
+{{- if not (reflect.IsMap $rawRegistry) -}}
+  {{- errorf "%s params.resumeLinks must be a map" $prefix -}}
+  {{- $rawRegistry = dict -}}
+{{- end -}}
+
+{{- range $key, $_ := $rawRegistry -}}
+  {{- if not (in (slice "header" "actions" "items") $key) -}}
+    {{- errorf "%s unknown registry key %q" $prefix $key -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $rawHeader := slice -}}
+{{- if not (isset $rawRegistry "header") -}}
+  {{- errorf "%s params.resumeLinks.header is required" $prefix -}}
+{{- else if not (reflect.IsSlice (index $rawRegistry "header")) -}}
+  {{- errorf "%s params.resumeLinks.header must be an array" $prefix -}}
+{{- else -}}
+  {{- $rawHeader = index $rawRegistry "header" -}}
+{{- end -}}
+
+{{- $rawActions := slice -}}
+{{- if not (isset $rawRegistry "actions") -}}
+  {{- errorf "%s params.resumeLinks.actions is required" $prefix -}}
+{{- else if not (reflect.IsSlice (index $rawRegistry "actions")) -}}
+  {{- errorf "%s params.resumeLinks.actions must be an array" $prefix -}}
+{{- else -}}
+  {{- $rawActions = index $rawRegistry "actions" -}}
+{{- end -}}
+
+{{- $rawItems := dict -}}
+{{- if not (isset $rawRegistry "items") -}}
+  {{- errorf "%s params.resumeLinks.items is required" $prefix -}}
+{{- else if not (reflect.IsMap (index $rawRegistry "items")) -}}
+  {{- errorf "%s params.resumeLinks.items must be a map" $prefix -}}
+{{- else -}}
+  {{- $rawItems = index $rawRegistry "items" -}}
+{{- end -}}
+
+{{- $icons := dict -}}
+{{- $iconsReady := false -}}
+{{- with resources.Get "generated/icons.json" -}}
+  {{- $decoded := . | transform.Unmarshal -}}
+  {{- if not (reflect.IsMap $decoded) -}}
+    {{- errorf "%s generated icon registry must be a map" $prefix -}}
+  {{- else -}}
+    {{- $icons = $decoded -}}
+    {{- $iconsReady = true -}}
+  {{- end -}}
+{{- else -}}
+  {{- errorf "%s generated icon registry is missing" $prefix -}}
+{{- end -}}
+
+{{- $normalizedItems := dict -}}
+{{- range $id, $rawItem := $rawItems -}}
+  {{- $itemOK := true -}}
+  {{- if eq (len (findRE `^[a-z][a-z0-9_]*$` $id)) 0 -}}
+    {{- errorf "%s item ID %q must match ^[a-z][a-z0-9_]*$" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- end -}}
+
+  {{- if not (reflect.IsMap $rawItem) -}}
+    {{- errorf "%s item %q must be a map" $prefix $id -}}
+    {{- $rawItem = dict -}}
+    {{- $itemOK = false -}}
+  {{- end -}}
+
+  {{- range $key, $_ := $rawItem -}}
+    {{- if not (in (slice "kind" "url" "text" "label") $key) -}}
+      {{- errorf "%s item %q has unknown key %q" $prefix $id $key -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $kind := "" -}}
+  {{- if not (isset $rawItem "kind") -}}
+    {{- errorf "%s item %q requires kind" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else if ne (printf "%T" (index $rawItem "kind")) "string" -}}
+    {{- errorf "%s item %q kind must be a string" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else -}}
+    {{- $rawKind := index $rawItem "kind" -}}
+    {{- $kind = strings.TrimSpace $rawKind -}}
+    {{- if eq $kind "" -}}
+      {{- errorf "%s item %q kind must not be blank" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- else if ne $kind $rawKind -}}
+      {{- errorf "%s item %q kind must not have leading or trailing whitespace" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- else if not (in $supportedKinds $kind) -}}
+      {{- errorf "%s item %q uses unsupported kind %q" $prefix $id $kind -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $text := "" -}}
+  {{- if not (isset $rawItem "text") -}}
+    {{- errorf "%s item %q requires text" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else if ne (printf "%T" (index $rawItem "text")) "string" -}}
+    {{- errorf "%s item %q text must be a string" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else -}}
+    {{- $text = strings.TrimSpace (index $rawItem "text") -}}
+    {{- if eq $text "" -}}
+      {{- errorf "%s item %q text must not be blank" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $label := "" -}}
+  {{- if not (isset $rawItem "label") -}}
+    {{- errorf "%s item %q requires label" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else if ne (printf "%T" (index $rawItem "label")) "string" -}}
+    {{- errorf "%s item %q label must be a string" $prefix $id -}}
+    {{- $itemOK = false -}}
+  {{- else -}}
+    {{- $label = strings.TrimSpace (index $rawItem "label") -}}
+    {{- if eq $label "" -}}
+      {{- errorf "%s item %q label must not be blank" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $url := "" -}}
+  {{- if eq $kind "location" -}}
+    {{- if isset $rawItem "url" -}}
+      {{- errorf "%s location item %q must not define url" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- else -}}
+    {{- if not (isset $rawItem "url") -}}
+      {{- errorf "%s item %q requires url" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- else if ne (printf "%T" (index $rawItem "url")) "string" -}}
+      {{- errorf "%s item %q url must be a string" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- else -}}
+      {{- $rawURL := index $rawItem "url" -}}
+      {{- $url = strings.TrimSpace $rawURL -}}
+      {{- if eq $url "" -}}
+        {{- errorf "%s item %q url must not be blank" $prefix $id -}}
+        {{- $itemOK = false -}}
+      {{- else if ne $url $rawURL -}}
+        {{- errorf "%s item %q url must not have leading or trailing whitespace" $prefix $id -}}
+        {{- $itemOK = false -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if in (slice "online-cv" "website" "linkedin" "github") $kind -}}
+    {{- $httpsOK := true -}}
+    {{- if gt (len (findRE `[[:cntrl:][:space:]]` $url)) 0 -}}
+      {{- $httpsOK = false -}}
+    {{- else -}}
+      {{- with try (urls.Parse $url) -}}
+        {{- with .Err -}}
+          {{- $httpsOK = false -}}
+        {{- else with .Value -}}
+          {{- if or (ne .Scheme "https") (eq .Hostname "") .User -}}
+            {{- $httpsOK = false -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not $httpsOK -}}
+      {{- errorf "%s item %q requires an absolute HTTPS URL with a host and no credentials" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- else if eq $kind "email" -}}
+    {{- $emailRest := strings.TrimPrefix "mailto:" $url -}}
+    {{- $emailAddress := index (split $emailRest "?") 0 -}}
+    {{- if or (not (hasPrefix $url "mailto:")) (eq $emailAddress "") (in $url "#") (gt (len (findRE `[[:cntrl:][:space:]]` $url)) 0) -}}
+      {{- errorf "%s email item %q requires mailto: with a nonempty address and no fragment or control characters" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- else if eq $kind "phone" -}}
+    {{- $phoneRest := strings.TrimPrefix "tel:" $url -}}
+    {{- $trimmedPhoneRest := strings.TrimSpace $phoneRest -}}
+    {{- if or (not (hasPrefix $url "tel:")) (eq $trimmedPhoneRest "") (ne $phoneRest $trimmedPhoneRest) (gt (len (findRE `[[:cntrl:]]` $phoneRest)) 0) -}}
+      {{- errorf "%s phone item %q requires tel: with a nonempty dial string" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- end -}}
+  {{- else if eq $kind "pdf" -}}
+    {{- $pdfOK := true -}}
+    {{- if or (not (hasPrefix $url "/")) (hasPrefix $url "//") (not (hasSuffix $url ".pdf")) (in $url ":") (in $url "?") (in $url "#") (in $url `\`) (in $url "%") (in $url "//") -}}
+      {{- $pdfOK = false -}}
+    {{- end -}}
+    {{- if and $pdfOK (ne (path.Clean $url) $url) -}}
+      {{- $pdfOK = false -}}
+    {{- end -}}
+    {{- range after 1 (split $url "/") -}}
+      {{- if or (eq . "") (eq . ".") (eq . "..") -}}
+        {{- $pdfOK = false -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if not $pdfOK -}}
+      {{- errorf "%s PDF item %q requires a normalized root-relative lowercase .pdf path without scheme, host, query, fragment, backslash, percent escape, or empty/dot segment" $prefix $id -}}
+      {{- $itemOK = false -}}
+    {{- else -}}
+      {{- $pdfFile := printf "static/%s" (strings.TrimPrefix "/" $url) -}}
+      {{- $pdfInfo := os.Stat $pdfFile -}}
+      {{- if not $pdfInfo -}}
+        {{- errorf "%s PDF item %q does not resolve to a regular file at %s" $prefix $id $pdfFile -}}
+        {{- $itemOK = false -}}
+      {{- else if $pdfInfo.IsDir -}}
+        {{- errorf "%s PDF item %q resolves to a directory at %s" $prefix $id $pdfFile -}}
+        {{- $itemOK = false -}}
+      {{- else if not $pdfInfo.Mode.IsRegular -}}
+        {{- errorf "%s PDF item %q does not resolve to a regular file at %s" $prefix $id $pdfFile -}}
+        {{- $itemOK = false -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $icon := dict -}}
+  {{- if and $iconsReady (ne $kind "") (isset $icons $kind) -}}
+    {{- $icon = index $icons $kind -}}
+  {{- else if and $iconsReady (ne $kind "") -}}
+    {{- errorf "%s generated icon registry has no entry for kind %q" $prefix $kind -}}
+    {{- $itemOK = false -}}
+  {{- else if ne $kind "" -}}
+    {{- $itemOK = false -}}
+  {{- end -}}
+
+  {{- if $itemOK -}}
+    {{- $href := $url -}}
+    {{- if eq $kind "pdf" -}}
+      {{- $href = relURL (strings.TrimPrefix "/" $url) -}}
+    {{- end -}}
+    {{- $entry := dict
+      "id" $id
+      "kind" $kind
+      "url" $url
+      "href" $href
+      "text" $text
+      "label" $label
+      "icon" $icon
+      "rel" (cond (in $identityKinds $kind) "me" "")
+      "download" (eq $kind "pdf")
+    -}}
+    {{- $normalizedItems = merge $normalizedItems (dict $id $entry) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $header := slice -}}
+{{- $seenHeader := dict -}}
+{{- range $position, $rawID := $rawHeader -}}
+  {{- if ne (printf "%T" $rawID) "string" -}}
+    {{- errorf "%s header entry %d must be an item ID string" $prefix $position -}}
+  {{- else -}}
+    {{- $id := $rawID -}}
+    {{- if eq (len (findRE `^[a-z][a-z0-9_]*$` $id)) 0 -}}
+      {{- errorf "%s header entry %q must match ^[a-z][a-z0-9_]*$" $prefix $id -}}
+    {{- else if isset $seenHeader $id -}}
+      {{- errorf "%s header contains duplicate item ID %q" $prefix $id -}}
+    {{- else -}}
+      {{- $seenHeader = merge $seenHeader (dict $id true) -}}
+      {{- if not (isset $rawItems $id) -}}
+        {{- errorf "%s header references unknown item ID %q" $prefix $id -}}
+      {{- else if isset $normalizedItems $id -}}
+        {{- $header = $header | append (index $normalizedItems $id) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $actions := slice -}}
+{{- $seenActions := dict -}}
+{{- range $position, $rawID := $rawActions -}}
+  {{- if ne (printf "%T" $rawID) "string" -}}
+    {{- errorf "%s actions entry %d must be an item ID string" $prefix $position -}}
+  {{- else -}}
+    {{- $id := $rawID -}}
+    {{- if eq (len (findRE `^[a-z][a-z0-9_]*$` $id)) 0 -}}
+      {{- errorf "%s actions entry %q must match ^[a-z][a-z0-9_]*$" $prefix $id -}}
+    {{- else if isset $seenActions $id -}}
+      {{- errorf "%s actions contains duplicate item ID %q" $prefix $id -}}
+    {{- else -}}
+      {{- $seenActions = merge $seenActions (dict $id true) -}}
+      {{- if not (isset $rawItems $id) -}}
+        {{- errorf "%s actions references unknown item ID %q" $prefix $id -}}
+      {{- else if isset $normalizedItems $id -}}
+        {{- $entry := index $normalizedItems $id -}}
+        {{- if eq $entry.kind "location" -}}
+          {{- errorf "%s location item %q is permitted only in header" $prefix $id -}}
+        {{- else -}}
+          {{- $actions = $actions | append $entry -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $sameAs := slice -}}
+{{- $seenSameAs := dict -}}
+{{- range $entry := $header -}}
+  {{- if and (in $sameAsKinds $entry.kind) (not (isset $seenSameAs $entry.url)) -}}
+    {{- $sameAs = $sameAs | append $entry.url -}}
+    {{- $seenSameAs = merge $seenSameAs (dict $entry.url true) -}}
+  {{- end -}}
+{{- end -}}
+{{- range $entry := $actions -}}
+  {{- if and (in $sameAsKinds $entry.kind) (not (isset $seenSameAs $entry.url)) -}}
+    {{- $sameAs = $sameAs | append $entry.url -}}
+    {{- $seenSameAs = merge $seenSameAs (dict $entry.url true) -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return (dict "header" $header "actions" $actions "sameAs" $sameAs) -}}

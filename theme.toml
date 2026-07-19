@@ -1,11 +1,11 @@
 name = "cvnewtheme"
 license = "MIT"
 licenselink = "LICENSE.md"
-description = "A responsive Bootstrap resume and CV theme for Hugo."
+description = "An accessible, responsive, and print-ready resume theme for Hugo."
 homepage = "https://example.invalid/cvnewtheme"
 tags = ["cv", "resume"]
-features = ["responsive"]
-min_version = "0.41"
+features = ["responsive", "accessible", "print-ready", "semantic-links", "self-hosted-fonts"]
+min_version = "0.164.0"
 
 [author]
   name = "YOUR_NAME"

@@ -1,0 +1,228 @@
+baseURL = "https://overlong.example.invalid/"
+locale = "en"
+title = "Overlong Pagination Fixture"
+theme = "cvnewtheme"
+disableKinds = ["taxonomy", "term", "rss"]
+
+[params]
+author = "Morgan Lee"
+description = "Content that must paginate instead of shrinking or clipping."
+
+[params.seo]
+canonical = "https://overlong.example.invalid/"
+robots = "noindex, nofollow"
+personName = "Morgan Lee"
+personJobTitle = "Platform Engineer"
+keywords = ["platform engineering"]
+
+[params.profile]
+enable = true
+name = "OVERLONG CONTENT TOP"
+tagline = "Platform Engineer | Reliability and Delivery"
+
+[params.resumeLinks]
+header = ["online_cv", "website", "location"]
+actions = ["online_cv", "email", "linkedin", "github"]
+
+[params.resumeLinks.items.online_cv]
+kind = "online-cv"
+url = "https://overlong.example.invalid/"
+text = "Online CV"
+label = "View online CV"
+
+[params.resumeLinks.items.website]
+kind = "website"
+url = "https://morgan.example.invalid/"
+text = "morgan.example.invalid"
+label = "Visit website"
+
+[params.resumeLinks.items.location]
+kind = "location"
+text = "Toronto, Canada"
+label = "Location: Toronto, Canada"
+
+[params.resumeLinks.items.email]
+kind = "email"
+url = "mailto:morgan@example.invalid"
+text = "morgan@example.invalid"
+label = "Email Morgan Lee"
+
+[params.resumeLinks.items.linkedin]
+kind = "linkedin"
+url = "https://linkedin.example.invalid/in/morgan-lee"
+text = "LinkedIn"
+label = "View LinkedIn profile"
+
+[params.resumeLinks.items.github]
+kind = "github"
+url = "https://github.example.invalid/morgan-lee"
+text = "GitHub"
+label = "View GitHub profile"
+
+[params.summary]
+enable = true
+[[params.summary.list]]
+[[params.summary.list.items]]
+text = "This fixture intentionally exceeds one A4 page and must remain readable across every generated page."
+
+[params.experience]
+enable = true
+
+[[params.experience.list]]
+title = "Principal Engineer"
+dates = "2024 - Present"
+company = "Organisation Twelve"
+location = "Toronto"
+details = "Defined platform architecture and operating practices for twelve product groups."
+[[params.experience.list.items]]
+details = "Documented constraints, delivery evidence, and measured reliability outcomes."
+[[params.experience.list.items]]
+details = "Built migration paths that kept customer-facing services continuously available."
+
+[[params.experience.list]]
+title = "Staff Engineer"
+dates = "2022 - 2024"
+company = "Organisation Eleven"
+location = "Toronto"
+details = "Led a multi-region event processing programme from discovery through adoption."
+[[params.experience.list.items]]
+details = "Reduced recovery time and introduced deterministic replay verification."
+[[params.experience.list.items]]
+details = "Coached teams on service ownership, boundaries, and incident learning."
+
+[[params.experience.list]]
+title = "Staff Engineer"
+dates = "2020 - 2022"
+company = "Organisation Ten"
+location = "Vancouver"
+details = "Established a service platform for regulated customer workloads."
+[[params.experience.list.items]]
+details = "Added policy enforcement, provenance, and auditable delivery receipts."
+[[params.experience.list.items]]
+details = "Improved throughput while lowering infrastructure and support costs."
+
+[[params.experience.list]]
+title = "Senior Engineer"
+dates = "2018 - 2020"
+company = "Organisation Nine"
+location = "Vancouver"
+details = "Modernised identity and access services without disrupting existing clients."
+[[params.experience.list.items]]
+details = "Introduced compatibility contracts and staged migration controls."
+[[params.experience.list.items]]
+details = "Measured adoption and removed legacy paths only after verified cutover."
+
+[[params.experience.list]]
+title = "Senior Engineer"
+dates = "2016 - 2018"
+company = "Organisation Eight"
+location = "Montreal"
+details = "Built observability standards for a growing distributed estate."
+[[params.experience.list.items]]
+details = "Aligned service indicators with user-visible behaviour and budgets."
+[[params.experience.list.items]]
+details = "Reduced noisy alerts while increasing actionable incident coverage."
+
+[[params.experience.list]]
+title = "Software Engineer"
+dates = "2014 - 2016"
+company = "Organisation Seven"
+location = "Montreal"
+details = "Delivered data pipelines for planning and financial reporting."
+[[params.experience.list.items]]
+details = "Added reconciliation checks and deterministic backfill workflows."
+[[params.experience.list.items]]
+details = "Improved data freshness and reduced manual correction work."
+
+[[params.experience.list]]
+title = "Software Engineer"
+dates = "2012 - 2014"
+company = "Organisation Six"
+location = "Ottawa"
+details = "OVERLONG CONTENT MIDDLE - OVERLONG SPLIT CONTROL START - Developed API services for public-sector case management."
+[[params.experience.list.items]]
+details = "Hardened authorization boundaries and audit event coverage."
+[[params.experience.list.items]]
+details = "Simplified deployments and improved operator documentation. OVERLONG SPLIT CONTROL END"
+
+[[params.experience.list]]
+title = "Software Engineer"
+dates = "2010 - 2012"
+company = "Organisation Five"
+location = "Ottawa"
+details = "Maintained high-volume integration services and batch workflows."
+[[params.experience.list.items]]
+details = "Removed recurring failure modes and made retries replay-safe."
+[[params.experience.list.items]]
+details = "Created performance baselines and repeatable capacity tests."
+
+[[params.experience.list]]
+title = "Associate Engineer"
+dates = "2008 - 2010"
+company = "Organisation Four"
+location = "Halifax"
+details = "Implemented customer support tooling and operational dashboards."
+[[params.experience.list.items]]
+details = "Shortened issue diagnosis through consistent correlation metadata."
+[[params.experience.list.items]]
+details = "Automated routine checks and improved handover quality."
+
+[[params.experience.list]]
+title = "Associate Engineer"
+dates = "2006 - 2008"
+company = "Organisation Three"
+location = "Halifax"
+details = "Built internal web applications for engineering and operations."
+[[params.experience.list.items]]
+details = "Improved accessibility, browser compatibility, and test coverage."
+[[params.experience.list.items]]
+details = "Documented release procedures and recoverable rollback paths."
+
+[[params.experience.list]]
+title = "Junior Engineer"
+dates = "2004 - 2006"
+company = "Organisation Two"
+location = "Calgary"
+details = "Supported service releases and production issue investigation."
+[[params.experience.list.items]]
+details = "Added automated regression checks for recurring customer defects."
+[[params.experience.list.items]]
+details = "Made environment configuration consistent and reviewable."
+
+[[params.experience.list]]
+title = "Junior Engineer"
+dates = "2002 - 2004"
+company = "Organisation One"
+location = "Calgary"
+details = "Created reporting utilities and maintained integration adapters."
+[[params.experience.list.items]]
+details = "Established source control and peer review for operational scripts."
+[[params.experience.list.items]]
+details = "OVERLONG CONTENT FINAL"
+
+[params.skills]
+enable = true
+[[params.skills.list]]
+title = "Architecture"
+[[params.skills.list.items]]
+details = "Distributed systems, delivery governance, reliability engineering"
+
+[params.education]
+enable = true
+[[params.education.list]]
+degree = "BSc, Computer Science"
+university = "Example University"
+dates = "OVERLONG DOCUMENT TAIL"
+
+[params.certifications]
+enable = false
+[params.awards]
+enable = false
+[params.languages]
+enable = false
+[params.interests]
+enable = false
+[params.projects]
+enable = false
+[params.information]
+enable = false

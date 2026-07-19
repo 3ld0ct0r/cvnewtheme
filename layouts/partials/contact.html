@@ -1,23 +1,35 @@
-<div class="resume-contact col-12 col-lg-6 col-xl-6">
-  {{ $onlineCvURL := .Site.Params.seo.canonical | default .Site.BaseURL }}
-  <ul class="list-unstyled mb-0 resume-contact-list">
-    <li class="resume-contact-item">
-      <i class="fas fa-circle fa-fw fa-lg mr-2"></i
-      ><a class="resume-link" href="{{ $onlineCvURL | safeURL }}">Online CV</a>
+{{- $links := partialCached "resume-links.html" . .Site.Language.Lang -}}
+{{- with $links.header }}
+<address
+  class="resume-contact col-12 col-lg-6 col-xl-6"
+  aria-label="Contact information"
+>
+  <ol class="list-unstyled mb-0 resume-contact-list">
+    {{- range . }}
+    <li
+      class="resume-contact-item"
+      data-resume-link-id="{{ .id }}"
+      data-resume-kind="{{ .kind }}"
+      data-kind="{{ .kind }}"
+      {{- if .download }} data-pdf-action{{ end }}
+    >
+      {{- partial "resume-icon.html" (dict "icon" .icon "class" "resume-icon resume-contact-icon") }}
+      {{- if eq .kind "location" }}
+      <span class="resume-location-text" aria-hidden="true">{{ .text }}</span>
+      <span class="visually-hidden">{{ .label }}</span>
+      {{- else }}
+      <a
+        class="resume-link"
+        href="{{ .href | safeURL }}"
+        aria-label="{{ printf "%s — %s" .text .label }}"
+        data-resume-kind="{{ .kind }}"
+        data-kind="{{ .kind }}"
+        {{- with .rel }} rel="{{ . }}"{{ end }}
+        {{- if .download }} download data-pdf-action{{ end }}
+      >{{ .text }}</a>
+      {{- end }}
     </li>
-    {{ range .Site.Params.contact.list }}
-    {{ $isPdf := or (in (lower .text) "download pdf") (in (lower .url) ".pdf") }}
-    {{ if and (not (hasPrefix (lower .url) "mailto:")) (not $isPdf) }}
-    <li class="resume-contact-item">
-      <i class="{{ .icon }} fa-fw fa-lg mr-2"></i
-      ><a class="resume-link" href="{{ .url | safeURL }}">{{ .text }}</a>
-    </li>
-    {{ end }}
-    {{ end }}
-    <li class="resume-contact-item">
-      <i class="fas fa-map-marker-alt fa-fw fa-lg mr-2"></i>{{
-      .Site.Params.contact.location }}
-    </li>
-  </ul>
-</div>
-<!--//resume-contact-->
+    {{- end }}
+  </ol>
+</address>
+{{- end }}

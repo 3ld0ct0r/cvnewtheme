@@ -1,0 +1,33 @@
+{
+  "name": "@3ld0ct0r/cvnewtheme",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "bun@1.3.14",
+  "scripts": {
+    "build": "bun run build:assets && bun run build:example",
+    "build:assets": "bun scripts/build-assets.ts",
+    "build:example": "bun run check:assets && bun scripts/build-example.ts",
+    "capture:consumer-screenshots": "bun scripts/capture-consumer-screenshots.ts",
+    "check": "bun run check:assets && bun run test:unit && bun run build:example && bun run test:e2e",
+    "check:assets": "bun scripts/build-assets.ts --check",
+    "deps:outdated": "bun outdated --recursive",
+    "dev": "bun run build:assets && bun scripts/preview-test.ts --source exampleSite --port 1313",
+    "preview:test": "bun scripts/preview-test.ts --source tests/fixtures/max-content --port 4173",
+    "test:browser": "bunx playwright test tests/browser/browser.spec.ts",
+    "test:consumer": "bun scripts/test-consumer.ts",
+    "test:e2e": "bunx playwright test",
+    "test:pdf": "bunx playwright test tests/browser/pdf.spec.ts --project=pdf-chromium",
+    "test:unit": "bun test tests/*.test.ts",
+    "vendor:mona": "uv run --frozen --no-sync python scripts/vendor_mona_sans.py"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@fortawesome/fontawesome-free": "7.3.1",
+    "@playwright/test": "1.61.1",
+    "bootstrap": "5.3.8",
+    "pdfjs-dist": "6.1.200",
+    "sass": "1.101.0"
+  }
+}

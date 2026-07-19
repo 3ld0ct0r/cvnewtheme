@@ -1,14 +1,14 @@
 
                             <section id="education" class="education-section py-3">
 
-                                <h3 class="text-uppercase resume-section-heading mb-4">{{ i18n "education" }}</h3>
+                                <h2 class="text-uppercase resume-section-heading mb-4">{{ i18n "education" }}</h2>
 
                                 <ul class="list-unstyled resume-education-list">
                                     {{ range .Site.Params.education.list }}
                                     <li class="mb-3">
-                                        <div class="resume-degree font-weight-bold">{{ .degree }}</div>
-                                        <div class="resume-degree-org text-muted">{{ .university }}</div>
-                                        <div class="resume-degree-time text-muted">{{ .dates }}</div>
+                                        <div class="resume-degree fw-bold">{{ .degree }}</div>
+                                        <div class="resume-degree-org resume-metadata text-body-secondary">{{ .university }}</div>
+                                        <div class="resume-degree-time resume-metadata resume-date text-body-secondary">{{ .dates }}</div>
                                     </li>
                                     {{ end }}
                                 </ul>

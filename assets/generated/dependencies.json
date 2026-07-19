@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": {
+    "bun": "1.3.14",
+    "brotli": "1.2.0",
+    "fontTools": "4.63.0",
+    "python": "3.14.6",
+    "sass": "1.101.0",
+    "uv": "0.11.29",
+    "zopfli": "0.4.3"
+  },
+  "sources": {
+    "bootstrap": {
+      "license": "MIT",
+      "licenseSha256": "4620c84ad5ce8602ff65640ed6b7c8b78ebb9e036584f0ebc1ccc88206a4bb51",
+      "package": "bootstrap",
+      "upstreamUrl": "https://github.com/twbs/bootstrap/releases/tag/v5.3.8",
+      "version": "5.3.8"
+    },
+    "fontAwesome": {
+      "icons": [
+        {
+          "kind": "online-cv",
+          "path": "svgs-full/solid/address-card.svg",
+          "sha256": "b1ee2e5684df2b13c8c98bc95e50eda1fb4a911ed75ed199d2e4c14f8bd0de1f"
+        },
+        {
+          "kind": "email",
+          "path": "svgs-full/solid/at.svg",
+          "sha256": "5ac9feee21a5cec0e3f387777da31a2bb5c330a5c0d1ed0d658379408b8a8ec9"
+        },
+        {
+          "kind": "pdf",
+          "path": "svgs-full/solid/file-pdf.svg",
+          "sha256": "e1069283f2e2e2e4e2119329648981b03746bf8aff975168ed60cc79e7736592"
+        },
+        {
+          "kind": "linkedin",
+          "path": "svgs-full/brands/linkedin-in.svg",
+          "sha256": "8e3b5f80a8cbf9da169bf100454351b9a27ed71cf63889ccdba4351aec1263b5"
+        },
+        {
+          "kind": "github",
+          "path": "svgs-full/brands/github.svg",
+          "sha256": "d2708dcc457f2a094bc92c056b48f6f7c2a0f9a8f149ffbc6b71a1c8c623bf0f"
+        },
+        {
+          "kind": "website",
+          "path": "svgs-full/solid/globe.svg",
+          "sha256": "9ab47d1fa39f3fb0cd7c42262161d507229c267ea610ff11eeeb00ead5d28f02"
+        },
+        {
+          "kind": "location",
+          "path": "svgs-full/solid/location-dot.svg",
+          "sha256": "4d0f436c8db98c59b6cf2e64c6e7722d058759ea2dfd2c23d29098024d621d67"
+        },
+        {
+          "kind": "phone",
+          "path": "svgs-full/solid/phone.svg",
+          "sha256": "4b21c0aed8cbac28393c7f7850e135243db17cb2dd6ed3ffa92cd59d6a61f65d"
+        }
+      ],
+      "license": "(CC-BY-4.0 AND OFL-1.1 AND MIT)",
+      "licenseSha256": "20c6f40715a567c97b80f6944beb8bb325835cab47ea7dcab89ee3b8e077eced",
+      "package": "@fortawesome/fontawesome-free",
+      "upstreamUrl": "https://github.com/FortAwesome/Font-Awesome/releases/tag/7.3.1",
+      "version": "7.3.1"
+    },
+    "monaSans": {
+      "archiveUrl": "https://github.com/github/mona-sans/releases/download/v2.0.27/mona-sans-variable-v2.0.27.zip",
+      "archiveSha256": "a95127550b2957ff84cd636d4532b227ddc33d3485082437fa27816ef1d066ec",
+      "family": "Mona Sans",
+      "italicSource": {
+        "path": "assets/vendor/mona-sans-v2.0.27/MonaSansVF-Italic[wdth,opsz,wght].ttf",
+        "sha256": "a22a930591bff52f624a86e24f3172c51bb4c4b7fd252b07d170cdb163c4dea8"
+      },
+      "license": "SIL Open Font License 1.1",
+      "licenseSha256": "9261dcb61fb5e3c587d50d7a9fdae12bc7422d8822d7ac06b8f34550479575de",
+      "normalSource": {
+        "path": "assets/vendor/mona-sans-v2.0.27/MonaSansVF[wdth,opsz,wght].ttf",
+        "sha256": "9d96bf1303b964cc9101ea2419de780204cb6ace16375b017b66d1fe98a3a435"
+      },
+      "releaseUrl": "https://github.com/github/mona-sans/releases/tag/v2.0.27",
+      "version": "2.0.27"
+    }
+  },
+  "operations": {
+    "font": {
+      "familyRename": {
+        "family": "CV Resume Sans",
+        "postscriptPrefix": "CVResumeSans"
+      },
+      "opticalSize": {
+        "frozen": 20
+      },
+      "declaredSubsets": {
+        "latin": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+        "latinExt": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF"
+      },
+      "overlapAssignment": {
+        "codepoints": [
+          "U+0131",
+          "U+0152",
+          "U+0153",
+          "U+0304",
+          "U+0308",
+          "U+0329",
+          "U+2020"
+        ],
+        "owner": "latin"
+      },
+      "subsets": {
+        "latin": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+        "latinExt": "U+0100-0130,U+0132-0151,U+0154-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF"
+      },
+      "weight": {
+        "default": 400,
+        "maximum": 800,
+        "minimum": 400
+      },
+      "width": {
+        "default": 100,
+        "maximum": 100,
+        "minimum": 95
+      }
+    },
+    "icons": {
+      "count": 8,
+      "parser": "Bun.HTMLRewriter",
+      "policy": "svg[viewBox] plus path[d] geometry only"
+    }
+  },
+  "outputs": {
+    "css": {
+      "bytes": 249196,
+      "path": "assets/generated/devresume.min.css",
+      "sha256": "46bbad31baa909be62c048eaa27db8159452d9b0325d1c29ddb0fa45de96e84b"
+    },
+    "fonts": [
+      {
+        "axes": {
+          "wdth": [
+            95,
+            100,
+            100
+          ],
+          "wght": [
+            400,
+            400,
+            800
+          ]
+        },
+        "bytes": 27296,
+        "codepoints": 176,
+        "glyphs": 320,
+        "layoutFeatures": {
+          "GPOS": [
+            "kern"
+          ],
+          "GSUB": [
+            "aalt",
+            "case",
+            "ccmp",
+            "locl",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss10"
+          ]
+        },
+        "path": "static/generated/fonts/cv-resume-sans-latin-ext-italic.woff2",
+        "sha256": "3331563402932a4d196038ed4cf358378e06619cf3ca1b70c2f37847c0a9d9be",
+        "style": "italic",
+        "subset": "latin-ext",
+        "unicodeRange": "U+0100-0130,U+0132-0151,U+0154-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF"
+      },
+      {
+        "axes": {
+          "wdth": [
+            95,
+            100,
+            100
+          ],
+          "wght": [
+            400,
+            400,
+            800
+          ]
+        },
+        "bytes": 27288,
+        "codepoints": 176,
+        "glyphs": 320,
+        "layoutFeatures": {
+          "GPOS": [
+            "kern"
+          ],
+          "GSUB": [
+            "aalt",
+            "case",
+            "ccmp",
+            "locl",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss10"
+          ]
+        },
+        "path": "static/generated/fonts/cv-resume-sans-latin-ext-normal.woff2",
+        "sha256": "16e93dc7c368a30f399d69ffb0699e191294e55753132bc28af9cbd7fe4e20fa",
+        "style": "normal",
+        "subset": "latin-ext",
+        "unicodeRange": "U+0100-0130,U+0132-0151,U+0154-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF"
+      },
+      {
+        "axes": {
+          "wdth": [
+            95,
+            100,
+            100
+          ],
+          "wght": [
+            400,
+            400,
+            800
+          ]
+        },
+        "bytes": 82944,
+        "codepoints": 216,
+        "glyphs": 361,
+        "layoutFeatures": {
+          "GPOS": [
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "GSUB": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dnom",
+            "frac",
+            "liga",
+            "locl",
+            "numr",
+            "ordn",
+            "pnum",
+            "sinf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "ss09",
+            "ss10",
+            "subs",
+            "sups",
+            "tnum"
+          ]
+        },
+        "path": "static/generated/fonts/cv-resume-sans-latin-italic.woff2",
+        "sha256": "9c9f118d0315aeef0fa29ee1e9850ab7c70b04a5b470b82a98921e28ea492a5e",
+        "style": "italic",
+        "subset": "latin",
+        "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+      },
+      {
+        "axes": {
+          "wdth": [
+            95,
+            100,
+            100
+          ],
+          "wght": [
+            400,
+            400,
+            800
+          ]
+        },
+        "bytes": 80700,
+        "codepoints": 216,
+        "glyphs": 361,
+        "layoutFeatures": {
+          "GPOS": [
+            "kern",
+            "mark",
+            "mkmk"
+          ],
+          "GSUB": [
+            "aalt",
+            "case",
+            "ccmp",
+            "dnom",
+            "frac",
+            "liga",
+            "locl",
+            "numr",
+            "ordn",
+            "pnum",
+            "sinf",
+            "ss01",
+            "ss02",
+            "ss03",
+            "ss04",
+            "ss05",
+            "ss06",
+            "ss07",
+            "ss08",
+            "ss09",
+            "ss10",
+            "subs",
+            "sups",
+            "tnum"
+          ]
+        },
+        "path": "static/generated/fonts/cv-resume-sans-latin-normal.woff2",
+        "sha256": "a19ea1ed67da9335e418ece4bddfc0c2af48a7985a2691dbd4f59444c719223a",
+        "style": "normal",
+        "subset": "latin",
+        "unicodeRange": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD"
+      }
+    ],
+    "icons": {
+      "budgetBytes": 20480,
+      "bytes": 5938,
+      "count": 8,
+      "path": "assets/generated/icons.json",
+      "sha256": "dc60eb7b23344e38e79f7b2ba8952f45c55f7c591e968fc6080e38b88d99f4a9"
+    },
+    "licenses": [
+      {
+        "bytes": 4419,
+        "path": "static/generated/licenses/MonaSans-OFL.txt",
+        "sha256": "9261dcb61fb5e3c587d50d7a9fdae12bc7422d8822d7ac06b8f34550479575de",
+        "source": "assets/vendor/mona-sans-v2.0.27/OFL.txt"
+      },
+      {
+        "bytes": 7427,
+        "path": "static/generated/licenses/FontAwesome-LICENSE.txt",
+        "sha256": "20c6f40715a567c97b80f6944beb8bb325835cab47ea7dcab89ee3b8e077eced",
+        "source": "node_modules/@fortawesome/fontawesome-free/LICENSE.txt"
+      }
+    ],
+    "notices": {
+      "bytes": 1225,
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "a2517f26be65312932e4a8dcfa1b8bcfb0e87cb8dc8eae05d3ae439bee1dabf1"
+    }
+  },
+  "budgets": {
+    "individualBudgetBytes": 98304,
+    "initialBudgetBytes": 92160,
+    "initialBytes": 80700,
+    "totalBudgetBytes": 245760,
+    "totalBytes": 218228
+  }
+}

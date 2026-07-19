@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-19T15:01:58Z",
+  "title": "Design System: CV Resume Theme",
+  "extensions": {
+    "colorMeta": {
+      "dossier-blue": {
+        "role": "primary",
+        "displayName": "Dossier Blue",
+        "tonalRamp": ["#00101b", "#002b49", "#004574", "#0066ae", "#2f82bf", "#6cadd5", "#b2d7ed", "#eaf5fb"]
+      },
+      "evidence-ink": {
+        "role": "neutral",
+        "displayName": "Evidence Ink",
+        "tonalRamp": ["#0b0d0f", "#1f2328", "#3a4149", "#59636f", "#7e8995", "#a9b1ba", "#d4d8dd", "#f3f4f5"]
+      },
+      "body-slate": {
+        "role": "neutral",
+        "displayName": "Body Slate",
+        "tonalRamp": ["#15181b", "#2b3138", "#47505c", "#66717e", "#87919c", "#aab2bb", "#d2d6db", "#f2f3f5"]
+      },
+      "muted-text": {
+        "role": "neutral",
+        "displayName": "Muted Text",
+        "tonalRamp": ["#1d252d", "#33424f", "#5b7186", "#75899b", "#94a4b2", "#b4c0ca", "#d5dce2", "#f2f5f7"]
+      },
+      "muted-icon": {
+        "role": "neutral",
+        "displayName": "Muted Icon",
+        "tonalRamp": ["#26313b", "#41515f", "#6f8498", "#8799aa", "#a1afbc", "#bcc6ce", "#d9dfe4", "#f4f6f8"]
+      },
+      "quiet-divider": {
+        "role": "neutral",
+        "displayName": "Quiet Divider",
+        "tonalRamp": ["#151515", "#404040", "#737373", "#a3a3a3", "#c9c9c9", "#eaeaea", "#f5f5f5", "#fbfbfb"]
+      },
+      "resume-surface": {
+        "role": "neutral",
+        "displayName": "Resume Surface",
+        "tonalRamp": ["#1a1a1a", "#404040", "#666666", "#8c8c8c", "#b3b3b3", "#d9d9d9", "#f2f2f2", "#ffffff"]
+      },
+      "page-canvas": {
+        "role": "neutral",
+        "displayName": "Page Canvas",
+        "tonalRamp": ["#18191a", "#3e3f40", "#646566", "#8a8b8c", "#b1b2b3", "#d7d8d9", "#eceeef", "#f8f9fa"]
+      }
+    },
+    "typographyMeta": {
+      "name": { "displayName": "Name", "purpose": "Compact identity anchor and highest authored emphasis." },
+      "section": { "displayName": "Section", "purpose": "Short resume section labels only." },
+      "body": { "displayName": "Body", "purpose": "Summaries, outcomes, and evidence-led prose." },
+      "metadata": { "displayName": "Metadata", "purpose": "Contact details, dates, and sidebar facts." }
+    },
+    "shadows": [
+      { "name": "outer-sheet", "value": "0 1rem 3rem rgba(0, 0, 0, 0.175)", "purpose": "Screen-only ambient framing for the complete resume sheet." }
+    ],
+    "motion": [
+      { "name": "action-state", "value": "160ms ease-out", "purpose": "Color-only hover and focus response on screen action targets." },
+      { "name": "tooltip-state", "value": "140ms ease-out", "purpose": "Short opacity and transform reveal; removed under reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" },
+      { "name": "desktop-split", "value": "992px" },
+      { "name": "wide", "value": "1200px" },
+      { "name": "canvas-max", "value": "1400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Resume Surface",
+      "kind": "card",
+      "refersTo": "resume-surface",
+      "description": "The single borderless sheet that owns all resume content.",
+      "html": "<article class=\"ds-resume-surface\"><strong>Evidence-led resume</strong><p>One calm surface for structured technical experience.</p></article>",
+      "css": ".ds-resume-surface { background: #fff; color: #47505c; font: 400 13.2px/1.45 \"CV Resume Sans\", system-ui, sans-serif; max-width: 520px; padding: 30.4px; box-shadow: 0 16px 48px rgba(0,0,0,.175); } .ds-resume-surface strong { color: #1f2328; font-weight: 700; } .ds-resume-surface p { margin: 6px 0 0; max-width: 70ch; }"
+    },
+    {
+      "name": "Contact Entry",
+      "kind": "nav",
+      "refersTo": "contact-entry",
+      "description": "Visible compact contact text paired with decorative inline geometry.",
+      "html": "<a class=\"ds-contact-entry\" href=\"https://example.invalid/\"><svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 640 640\"><path d=\"M415.9 344L225 344C227.9 408.5 242.2 467.9 262.5 511.4C273.9 535.9 286.2 553.2 297.6 563.8C308.8 574.3 316.5 576 320.5 576C324.5 576 332.2 574.3 343.4 563.8C354.8 553.2 367.1 535.8 378.5 511.4C398.8 467.9 413.1 408.5 416 344zM224.9 296L415.8 296C413 231.5 398.7 172.1 378.4 128.6C367 104.2 354.7 86.8 343.3 76.2C332.1 65.7 324.4 64 320.4 64C316.4 64 308.7 65.7 297.5 76.2C286.1 86.8 273.8 104.2 262.4 128.6C242.1 172.1 227.8 231.5 224.9 296zM176.9 296C180.4 210.4 202.5 130.9 234.8 78.7C142.7 111.3 74.9 195.2 65.5 296L176.9 296zM65.5 344C74.9 444.8 142.7 528.7 234.8 561.3C202.5 509.1 180.4 429.6 176.9 344L65.5 344zM463.9 344C460.4 429.6 438.3 509.1 406 561.3C498.1 528.6 565.9 444.8 575.3 344L463.9 344zM575.3 296C565.9 195.2 498.1 111.3 406 78.7C438.3 130.9 460.4 210.4 463.9 296L575.3 296z\"/></svg>Website</a>",
+      "css": ".ds-contact-entry { align-items: center; color: #47505c; display: inline-flex; font: 500 12px/1.15 \"CV Resume Sans\", system-ui, sans-serif; text-decoration: none; } .ds-contact-entry svg { color: #6f8498; fill: currentColor; height: 13.12px; margin-right: 2.88px; width: 13.12px; } .ds-contact-entry:hover { color: #0066ae; text-decoration: underline; } .ds-contact-entry:focus-visible { border-radius: 2.4px; outline: 2px solid #0066ae; outline-offset: 2px; }"
+    },
+    {
+      "name": "Resume Action",
+      "kind": "button",
+      "refersTo": "action-target",
+      "description": "A 40px same-tab action link with an inline monochrome icon.",
+      "html": "<a class=\"ds-action\" href=\"https://example.invalid/\" aria-label=\"View online CV\"><svg aria-hidden=\"true\" focusable=\"false\" viewBox=\"0 0 640 640\"><path d=\"M96 96C60.7 96 32 124.7 32 160L32 480C32 515.3 60.7 544 96 544L544 544C579.3 544 608 515.3 608 480L608 160C608 124.7 579.3 96 544 96L96 96zM176 352L240 352C284.2 352 320 387.8 320 432C320 440.8 312.8 448 304 448L112 448C103.2 448 96 440.8 96 432C96 387.8 131.8 352 176 352zM152 256C152 225.1 177.1 200 208 200C238.9 200 264 225.1 264 256C264 286.9 238.9 312 208 312C177.1 312 152 286.9 152 256zM392 208L504 208C517.3 208 528 218.7 528 232C528 245.3 517.3 256 504 256L392 256C378.7 256 368 245.3 368 232C368 218.7 378.7 208 392 208zM392 304L504 304C517.3 304 528 314.7 528 328C528 341.3 517.3 352 504 352L392 352C378.7 352 368 341.3 368 328C368 314.7 378.7 304 392 304z\"/></svg></a>",
+      "css": ".ds-action { align-items: center; border-radius: 8px; color: #6f8498; display: inline-flex; height: 40px; justify-content: center; text-decoration: none; transition: background-color 160ms ease-out, color 160ms ease-out; width: 40px; } .ds-action svg { fill: currentColor; height: 17.6px; width: 17.6px; } .ds-action:hover { background: rgba(0,102,174,.08); color: #0066ae; } .ds-action:focus-visible { background: rgba(0,102,174,.08); color: #0066ae; outline: 2px solid #0066ae; outline-offset: 2px; }"
+    },
+    {
+      "name": "Section Heading",
+      "kind": "custom",
+      "refersTo": "section-heading",
+      "description": "A restrained blue label that marks one resume evidence section.",
+      "html": "<h2 class=\"ds-section-heading\">Experience</h2>",
+      "css": ".ds-section-heading { border-bottom: 1px solid rgba(0,102,174,.38); color: #0066ae; display: inline-block; font: 700 16px/1.14 \"CV Resume Sans\", system-ui, sans-serif; letter-spacing: .045em; margin: 0; padding-bottom: 1.92px; text-transform: uppercase; text-wrap: balance; }"
+    },
+    {
+      "name": "Evidence Entry",
+      "kind": "custom",
+      "description": "Company, role, date, and measurable outcome without a card container.",
+      "html": "<section class=\"ds-evidence\"><div class=\"ds-evidence-head\"><strong>ACME SYSTEMS</strong><span>Principal Engineer</span><time>2024–Present</time></div><p>Reduced recovery time by 42% through tested service boundaries and operational runbooks.</p></section>",
+      "css": ".ds-evidence { color: #47505c; font: 400 13.2px/1.52 \"CV Resume Sans\", system-ui, sans-serif; max-width: 70ch; } .ds-evidence-head { align-items: baseline; display: grid; gap: 2px 6px; grid-template-columns: auto minmax(0,1fr) auto; } .ds-evidence strong { color: #0066ae; font-weight: 800; } .ds-evidence span { color: #5b7186; font-weight: 600; } .ds-evidence time { color: #5b7186; font-variant-numeric: tabular-nums; font-weight: 500; } .ds-evidence p { margin: 5px 0 0; text-wrap: pretty; }"
+    },
+    {
+      "name": "Skill Group",
+      "kind": "custom",
+      "refersTo": "skill-group-label",
+      "description": "A compact sidebar group with plain inline skills rather than pills.",
+      "html": "<section class=\"ds-skill-group\"><strong>PLATFORM ENGINEERING</strong><p>Go · Kubernetes · OpenTelemetry · PostgreSQL</p></section>",
+      "css": ".ds-skill-group { border-top: 1px solid #eaeaea; color: #47505c; font: 400 12px/1.44 \"CV Resume Sans\", system-ui, sans-serif; padding-top: 4.48px; } .ds-skill-group strong { color: #0066ae; display: block; font-weight: 600; letter-spacing: .01rem; margin-bottom: 2.56px; } .ds-skill-group p { margin: 0; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Technical Dossier",
+    "overview": "The interface behaves like a carefully prepared technical dossier: compact, evidence-led, and calm under scrutiny. Hierarchy comes from weight, spacing, and alignment rather than decorative surfaces. Screen and print are one system, with one ambient screen elevation and a flat, legible A4 composition. The system rejects portfolio theatrics and anything that competes with the candidate's evidence.",
+    "keyCharacteristics": [
+      "Restrained blue emphasis on a neutral white sheet.",
+      "Dense but readable typesetting with explicit weight roles from 400 through 800.",
+      "Semantic contact and action navigation with monochrome inline geometry.",
+      "Stable desktop composition, straightforward mobile stacking, and measured A4 output.",
+      "No presentation dependency on network fonts, runtime icons, or decorative motion."
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Dossier Blue is the only chromatic accent and should occupy less than 10% of the visible sheet.", "section": "colors" },
+      { "name": "The Muted Roles Rule", "body": "Use #5b7186 for readable small text and reserve #6f8498 for non-text graphical objects.", "section": "colors" },
+      { "name": "The One Family Rule", "body": "CV Resume Sans is the sole authored family; only the system sans-serif stack may follow it as a fallback.", "section": "typography" },
+      { "name": "The Legibility Floor Rule", "body": "Main copy stays at or above 0.825rem on screen and 8.75pt in print; secondary copy stays at or above 0.75rem and 8pt.", "section": "typography" },
+      { "name": "The Single Plane Rule", "body": "Only the complete resume sheet may appear elevated; everything inside it remains on one visual plane.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do let evidence lead through weight, alignment, and measured spacing.",
+      "Do use #0066ae for semantic emphasis and the focus outline, #5b7186 for small muted text, and #6f8498 only for non-text icons.",
+      "Do keep action targets at 40 by 40px with 6px gaps and a 2px focus-visible outline.",
+      "Do preserve the 54/46 header and 60/40 body at 992px and above, then stack in source order below it.",
+      "Do keep screen and A4 print behavior in the same component and verify both after typography or spacing changes.",
+      "Do render monochrome SVG geometry inline while visible text and hidden labels carry meaning."
+    ],
+    "donts": [
+      "Don't use generic portfolio theatrics, decorative gradients, glass effects, platform-brand colors, or oversized pill controls.",
+      "Don't use tiny low-contrast copy, synthetic small caps, excessive tracking, or arbitrary shrinking to force unlimited content onto one page.",
+      "Don't add runtime icon libraries, external font CDNs, decorative motion, or interactions whose meaning depends on color or tooltip text.",
+      "Don't use repeated colored side-stripe accents, nested cards, or template decoration that competes with resume evidence.",
+      "Don't add a second display typeface, gradient text, forced font smoothing, or synthesized font styles.",
+      "Don't use #6f8498 for text or introduce a colored side border wider than 1px."
+    ]
+  }
+}

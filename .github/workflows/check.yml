@@ -22,7 +22,6 @@ jobs:
     env:
       CI: "true"
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-      HUGO_CACHEDIR: ${{ runner.temp }}/hugo-cache
 
     steps:
       - name: Check out repository
@@ -73,6 +72,8 @@ jobs:
           bunx playwright install --with-deps chromium firefox webkit
 
       - name: Run complete verification
+        env:
+          HUGO_CACHEDIR: ${{ runner.temp }}/hugo-cache
         run: bun run check
 
       - name: Upload browser and PDF diagnostics

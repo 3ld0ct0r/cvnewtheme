@@ -2,6 +2,8 @@ import { expect, test } from "@playwright/test";
 import {
   attachPdf,
   EXAMPLE_SITE_URL,
+  expectedActionIds,
+  expectedHeaderIds,
   generateA4Pdf,
   observePage,
   openResume,
@@ -32,16 +34,6 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
 }, testInfo) => {
   const diagnostics = observePage(page, new URL(testInfo.project.use.baseURL as string).origin);
   await openResume(page);
-  await page.evaluate(() => {
-    const source = document.querySelector<HTMLElement>(
-      ".resume-action-item[data-pdf-action]",
-    )!;
-    const clone = source.cloneNode(true) as HTMLElement;
-    clone.className = "resume-contact-item";
-    clone.dataset.testHeaderPdf = "true";
-    clone.querySelector<HTMLElement>("a")!.className = "resume-link";
-    document.querySelector(".resume-contact-list")!.append(clone);
-  });
   await page.emulateMedia({ media: "print" });
 
   const printState = await page.evaluate(() => {
@@ -61,8 +53,15 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
       mainRatio: mainWidth / (mainWidth + asideWidth),
       headerPdfVisible:
         getComputedStyle(
-          document.querySelector<HTMLElement>("[data-test-header-pdf]")!,
+          document.querySelector<HTMLElement>(
+            '.resume-contact-item[data-resume-link-id="pdf"]',
+          )!,
         ).display !== "none",
+      visibleHeaderIds: Array.from(
+        document.querySelectorAll<HTMLElement>(".resume-contact-item"),
+      )
+        .filter((element) => getComputedStyle(element).display !== "none")
+        .map((element) => element.dataset.resumeLinkId),
       tooltipsVisible: Array.from(
         document.querySelectorAll<HTMLElement>(".resume-action-tooltip"),
       ).some((element) => getComputedStyle(element).display !== "none"),
@@ -72,6 +71,7 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
   expect(printState.mainRatio).toBeGreaterThanOrEqual(0.595);
   expect(printState.mainRatio).toBeLessThanOrEqual(0.605);
   expect(printState.headerPdfVisible).toBe(false);
+  expect(printState.visibleHeaderIds).toEqual(["email", "location"]);
   expect(printState.actionKinds).toEqual([
     "online-cv",
     "email",
@@ -103,7 +103,6 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
     annotation.url ? [annotation.url] : [],
   );
   expect(urls).toContain("https://resume.example.invalid/");
-  expect(urls).toContain("https://avery.example.invalid/");
   expect(urls.some((url) => url.startsWith("mailto:avery@example.invalid"))).toBe(true);
   expect(urls.some((url) => url.includes("linkedin.example.invalid"))).toBe(true);
   expect(urls.some((url) => url.includes("github.example.invalid"))).toBe(true);
@@ -138,6 +137,16 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
 test("exampleSite itself remains one linked A4 page", async ({ page }, testInfo) => {
   const diagnostics = observePage(page, new URL(EXAMPLE_SITE_URL).origin);
   await openResume(page, EXAMPLE_SITE_URL);
+  const screenSurfaces = await page.evaluate(() => ({
+    actions: Array.from(
+      document.querySelectorAll<HTMLElement>(".resume-action-item"),
+    ).map((element) => element.dataset.resumeLinkId),
+    header: Array.from(
+      document.querySelectorAll<HTMLElement>(".resume-contact-item"),
+    ).map((element) => element.dataset.resumeLinkId),
+  }));
+  expect(screenSurfaces.header).toEqual(expectedHeaderIds);
+  expect(screenSurfaces.actions).toEqual(expectedActionIds);
   await page.emulateMedia({ media: "print" });
 
   const bytes = await generateA4Pdf(page);
@@ -162,7 +171,6 @@ test("exampleSite itself remains one linked A4 page", async ({ page }, testInfo)
     annotation.url ? [annotation.url] : [],
   );
   expect(urls).toContain("https://resume.example.invalid/");
-  expect(urls).toContain("https://portfolio.example.invalid/");
   expect(urls.some((url) => url.startsWith("mailto:your.name@example.invalid"))).toBe(
     true,
   );

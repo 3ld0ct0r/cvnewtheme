@@ -34,8 +34,14 @@ The registry is required. `header` controls the visible contact list and `action
 
 ```toml
 [params.resumeLinks]
-header = ["online_cv", "website", "location"]
-actions = ["online_cv", "email", "linkedin", "github"]
+header = ["pdf", "email", "location"]
+actions = ["online_cv", "email", "pdf", "linkedin", "github"]
+
+[params.resumeLinks.items.pdf]
+kind = "pdf"
+url = "/resume.pdf"
+text = "Download PDF"
+label = "Download resume PDF"
 
 [params.resumeLinks.items.online_cv]
 kind = "online-cv"
@@ -73,6 +79,8 @@ text = "GitHub"
 label = "View GitHub profile"
 ```
 
+Add the real file at `static/resume.pdf` before selecting the PDF item. The shipped top-right header contains exactly the PDF download, email, and location in that order. The PDF icon and text share one 40px hover/focus target, email renders as text without an icon, and location retains its decorative location icon.
+
 Supported kinds are `online-cv`, `website`, `linkedin`, `github`, `email`, `phone`, `pdf`, and `location`. The theme selects the icon. Consumers do not configure Font Awesome classes.
 
 The build fails with a `resumeLinks:` error when the registry is malformed. Important rules are:
@@ -85,7 +93,7 @@ The build fails with a `resumeLinks:` error when the registry is malformed. Impo
 - Email requires `mailto:` and phone requires `tel:`.
 - `location` has no URL and is permitted only in the header.
 - Values are rendered as escaped plain text.
-- Header links expose `<text> — <label>` as their accessible name so the visible text remains part of the name; action links use `label`, and a location exposes its configured `label` alongside the visible text.
+- Header links use `label` when it matches the visible text; otherwise they expose `<text> — <label>` so the visible text remains part of the accessible name. Action links use `label`, and a location exposes its configured `label` alongside the visible text.
 - Links stay in the current tab. Website, LinkedIn, and GitHub receive `rel="me"`; PDF receives `download`.
 
 The old `params.contact`, `params.social`, URL heuristics, and raw Font Awesome class configuration are not supported.
@@ -96,13 +104,13 @@ PDF activation is atomic. First add a real file at `static/resume.pdf`, then add
 
 ```toml
 [params.resumeLinks]
-header = ["online_cv", "website", "location"]
+header = ["pdf", "email", "location"]
 actions = ["online_cv", "email", "pdf", "linkedin", "github"]
 
 [params.resumeLinks.items.pdf]
 kind = "pdf"
 url = "/resume.pdf"
-text = "Resume PDF"
+text = "Download PDF"
 label = "Download resume PDF"
 ```
 

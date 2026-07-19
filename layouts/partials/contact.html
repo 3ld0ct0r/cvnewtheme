@@ -13,20 +13,29 @@
       data-kind="{{ .kind }}"
       {{- if .download }} data-pdf-action{{ end }}
     >
-      {{- partial "resume-icon.html" (dict "icon" .icon "class" "resume-icon resume-contact-icon") }}
       {{- if eq .kind "location" }}
+      {{- partial "resume-icon.html" (dict "icon" .icon "class" "resume-icon resume-contact-icon") }}
       <span class="resume-location-text" aria-hidden="true">{{ .text }}</span>
       <span class="visually-hidden">{{ .label }}</span>
       {{- else }}
+      {{- $accessibleLabel := .label -}}
+      {{- if ne .text .label -}}
+        {{- $accessibleLabel = printf "%s — %s" .text .label -}}
+      {{- end }}
       <a
-        class="resume-link"
+        class="resume-link resume-contact-link{{ if eq .kind "pdf" }} resume-contact-download{{ end }}"
         href="{{ .href | safeURL }}"
-        aria-label="{{ printf "%s — %s" .text .label }}"
+        aria-label="{{ $accessibleLabel }}"
         data-resume-kind="{{ .kind }}"
         data-kind="{{ .kind }}"
         {{- with .rel }} rel="{{ . }}"{{ end }}
         {{- if .download }} download data-pdf-action{{ end }}
-      >{{ .text }}</a>
+      >
+        {{- if ne .kind "email" }}
+          {{- partial "resume-icon.html" (dict "icon" .icon "class" "resume-icon resume-contact-icon") }}
+        {{- end }}
+        <span class="resume-contact-text">{{ .text }}</span>
+      </a>
       {{- end }}
     </li>
     {{- end }}

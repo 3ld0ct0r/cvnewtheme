@@ -6,10 +6,10 @@ export const FONT_BASIC_URL = "http://127.0.0.1:4174";
 export const OVERLONG_URL = "http://127.0.0.1:4175";
 export const EXAMPLE_SITE_URL = "http://127.0.0.1:4177";
 
-export const expectedHeaderIds = ["online_cv", "website", "location"];
+export const expectedHeaderIds = ["pdf", "email", "location"];
 export const expectedHeaderLabels: Record<string, string> = {
-  online_cv: "Online CV — View online CV",
-  website: "avery.example.invalid — Visit Avery Morgan's website",
+  email: "avery@example.invalid — Email Avery Morgan",
+  pdf: "Download PDF — Download resume PDF",
 };
 export const expectedActionIds = [
   "online_cv",

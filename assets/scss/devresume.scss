@@ -222,9 +222,17 @@ a:focus-visible {
 	min-width: 0;
 }
 
-.resume-contact-item > .resume-link,
+.resume-contact-link,
+.resume-contact-text,
 .resume-location-text {
 	overflow-wrap: anywhere;
+}
+
+.resume-contact-link {
+	align-items: center;
+	display: inline-flex;
+	max-width: 100%;
+	min-width: 0;
 }
 
 .resume-contact-icon {
@@ -237,6 +245,37 @@ a:focus-visible {
 
 .resume-contact-item[data-resume-kind="location"] .resume-contact-icon {
 	color: $theme-color-primary;
+}
+
+.resume-contact-download {
+	border-radius: 0.5rem;
+	gap: 0.3rem;
+	min-height: 2.5rem;
+	padding: 0 0.5rem;
+	text-decoration: none;
+	transition: background-color 160ms ease-out, color 160ms ease-out;
+
+	.resume-contact-icon {
+		height: 1rem;
+		margin-right: 0;
+		transition: color 160ms ease-out;
+		width: 1rem;
+	}
+
+	&:hover,
+	&:focus-visible {
+		background: color.change($theme-color-primary, $alpha: 0.08);
+		color: $theme-color-primary;
+		text-decoration: none;
+
+		.resume-contact-icon {
+			color: $theme-color-primary;
+		}
+	}
+
+	&:focus-visible {
+		border-radius: 0.5rem;
+	}
 }
 
 a.resume-link:not(.resume-action-link) {
@@ -815,6 +854,7 @@ a.resume-link:not(.resume-action-link) {
 
 	.resume-contact {
 		flex: 0 0 46%;
+		margin-left: auto;
 		max-width: 46%;
 		padding-left: 0.28rem !important;
 		padding-right: 0 !important;
@@ -895,6 +935,7 @@ a.resume-link:not(.resume-action-link) {
 		border-left: 1px solid rgba(0, 0, 0, 0.08) !important;
 		flex: 0 0 46% !important;
 		font-size: 8pt !important;
+		margin-left: auto !important;
 		max-width: 46% !important;
 		padding-left: 0.28rem !important;
 		padding-right: 0 !important;
@@ -1099,20 +1140,29 @@ a.resume-link:not(.resume-action-link) {
 
 @media (forced-colors: active) {
 	.resume-action-link,
+	.resume-contact-download,
 	.resume-contact-icon,
 	.resume-icon {
 		color: LinkText;
 		forced-color-adjust: auto;
 	}
 
-	.resume-action-link:focus-visible {
+	.resume-action-link:focus-visible,
+	.resume-contact-download:focus-visible {
 		outline-color: Highlight;
+	}
+
+	.resume-contact-download:hover,
+	.resume-contact-download:focus-visible {
+		text-decoration: underline;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
 	.resume-action-link,
-	.resume-action-tooltip {
+	.resume-action-tooltip,
+	.resume-contact-download,
+	.resume-contact-download .resume-contact-icon {
 		transition: none;
 	}
 }

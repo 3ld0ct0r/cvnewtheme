@@ -141,6 +141,18 @@ function idsWithin(html: string, selectorClass: string): string[] {
   );
 }
 
+function itemWithin(html: string, selectorClass: string, id: string): string {
+  const elementPattern = new RegExp(
+    `<(?:address|nav)[^>]*class="[^"]*${selectorClass}[^"]*"[\\s\\S]*?<\\/(?:address|nav)>`,
+  );
+  const section = html.match(elementPattern)?.[0] ?? "";
+  return (
+    Array.from(section.matchAll(/<li\b[\s\S]*?<\/li>/g), (match) => match[0]).find(
+      (item) => item.includes(`data-resume-link-id="${id}"`),
+    ) ?? ""
+  );
+}
+
 async function expectContractFailure(
   registry: string,
   options: { directories?: string[]; includePdf?: boolean } = {},
@@ -276,17 +288,13 @@ describe("semantic resumeLinks contract", () => {
     }
   });
 
-  test("marks a valid header PDF for print suppression", async () => {
+  test("renders the compact PDF, email, and location header", async () => {
     let registry = replaceRequired(
       canonicalRegistry,
       'header = ["online_cv", "website", "location"]',
-      'header = ["pdf"]',
+      'header = ["pdf", "email", "location"]',
     );
-    registry = replaceRequired(
-      registry,
-      'actions = ["online_cv", "email", "pdf", "linkedin", "github"]',
-      "actions = []",
-    );
+    registry = replaceRequired(registry, 'text = "Resume PDF"', 'text = "Download PDF"');
     const result = await buildTemporarySite({
       config: configWith(registry),
       files: { "static/resume.pdf": await samplePdf() },
@@ -294,14 +302,36 @@ describe("semantic resumeLinks contract", () => {
     try {
       requireSuccessfulBuild(result);
       const html = await result.readOutput();
-      expect(idsWithin(html, "resume-contact")).toEqual(["pdf"]);
-      expect(idsWithin(html, "resume-actions")).toEqual([]);
-      expect(html).toMatch(
+      expect(idsWithin(html, "resume-contact")).toEqual([
+        "pdf",
+        "email",
+        "location",
+      ]);
+      expect(idsWithin(html, "resume-actions")).toEqual([
+        "online_cv",
+        "email",
+        "pdf",
+        "linkedin",
+        "github",
+      ]);
+      const pdfItem = itemWithin(html, "resume-contact", "pdf");
+      const emailItem = itemWithin(html, "resume-contact", "email");
+      const locationItem = itemWithin(html, "resume-contact", "location");
+      expect(pdfItem).toMatch(
         /<li[^>]*class="resume-contact-item"[^>]*data-resume-kind="pdf"[^>]*data-pdf-action/,
       );
-      expect(html).toMatch(
-        /<a[^>]*href="\/resume\.pdf"[^>]*download[^>]*data-pdf-action/,
+      expect(pdfItem).toMatch(
+        /<a[^>]*class="[^"]*resume-contact-download[^"]*"[^>]*href="\/resume\.pdf"[^>]*aria-label="Download PDF — Download resume PDF"[^>]*download[^>]*data-pdf-action/,
       );
+      expect(pdfItem).toContain("<svg");
+      expect(pdfItem).toContain('<span class="resume-contact-text">Download PDF</span>');
+      expect(emailItem).not.toContain("<svg");
+      expect(emailItem).toContain('<span class="resume-contact-text">avery@example.invalid</span>');
+      expect(locationItem).toContain("<svg");
+      expect(locationItem).toContain('<span class="resume-location-text" aria-hidden="true">Bengaluru, India</span>');
+      const actionPdf = itemWithin(html, "resume-actions", "pdf");
+      expect(actionPdf).toContain('<span class="visually-hidden">Download resume PDF</span>');
+      expect(actionPdf).toContain('<span class="resume-action-tooltip" aria-hidden="true">Download resume PDF</span>');
     } finally {
       await result.cleanup();
     }

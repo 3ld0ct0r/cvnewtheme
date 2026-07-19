@@ -60,10 +60,60 @@ test("the resume is responsive, accessible, local, and keyboard operable", async
     ).toHaveAccessibleName(label);
   }
 
+  const headerPdf = page.locator(
+    '.resume-contact-item[data-resume-link-id="pdf"] > a.resume-contact-download',
+  );
+  await expect(headerPdf).toHaveText("Download PDF");
+  await expect(headerPdf).toHaveAttribute("href", "/resume.pdf");
+  await expect(headerPdf).toHaveAttribute("download", "");
+  await expect(headerPdf.locator("svg.resume-contact-icon")).toHaveCount(1);
+  await expect(
+    page.locator(
+      '.resume-contact-item[data-resume-link-id="email"] svg.resume-contact-icon',
+    ),
+  ).toHaveCount(0);
+  await expect(
+    page.locator(
+      '.resume-contact-item[data-resume-link-id="location"] svg.resume-contact-icon',
+    ),
+  ).toHaveCount(1);
+  await expect(page.locator("address.resume-contact svg.resume-contact-icon")).toHaveCount(2);
+  await expect(
+    page.locator(
+      'address.resume-contact svg.resume-contact-icon:not([aria-hidden="true"])',
+    ),
+  ).toHaveCount(0);
+  await expect(
+    page.locator(
+      'address.resume-contact svg.resume-contact-icon:not([focusable="false"])',
+    ),
+  ).toHaveCount(0);
+  await expect(
+    page.locator(
+      "address.resume-contact svg.resume-contact-icon[role], address.resume-contact svg.resume-contact-icon title",
+    ),
+  ).toHaveCount(0);
+  const headerPdfBox = await headerPdf.boundingBox();
+  expect(headerPdfBox).not.toBeNull();
+  expect(headerPdfBox!.height + subpixelTolerance).toBeGreaterThanOrEqual(40);
+  await expect(headerPdf).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+  await expect(headerPdf.locator("svg.resume-contact-icon")).toHaveCSS(
+    "color",
+    "rgb(111, 132, 152)",
+  );
+  await headerPdf.hover();
+  await expect(headerPdf).toHaveCSS("background-color", "rgba(0, 102, 174, 0.08)");
+  await expect(headerPdf).toHaveCSS("color", "rgb(0, 102, 174)");
+  await expect(headerPdf.locator("svg.resume-contact-icon")).toHaveCSS(
+    "color",
+    "rgb(0, 102, 174)",
+  );
+  await page.mouse.move(0, 0);
+
   const originalContactText = await page.evaluate(() => {
     const selectors = [
-      '.resume-contact-item[data-resume-link-id="online_cv"] > a',
-      '.resume-contact-item[data-resume-link-id="website"] > a',
+      '.resume-contact-item[data-resume-link-id="pdf"] .resume-contact-text',
+      '.resume-contact-item[data-resume-link-id="email"] .resume-contact-text',
       '.resume-contact-item[data-resume-link-id="location"] .resume-location-text',
     ];
     return selectors.map((selector, index) => {
@@ -158,11 +208,61 @@ test("the resume is responsive, accessible, local, and keyboard operable", async
         return `${surface}:${item?.dataset.resumeLinkId ?? "missing"}`;
       });
     }
+    if (index === 0) {
+      expect(focusedItem).toBe("header:pdf");
+      await expect(headerPdf).toBeFocused();
+      await expect(headerPdf).toHaveCSS(
+        "background-color",
+        "rgba(0, 102, 174, 0.08)",
+      );
+      const headerFocusStyle = await headerPdf.evaluate((element) => {
+        const style = getComputedStyle(element);
+        const box = element.getBoundingClientRect();
+        return {
+          backgroundColor: style.backgroundColor,
+          borderRadius: Number.parseFloat(style.borderRadius),
+          bottom: box.bottom,
+          outlineColor: style.outlineColor,
+          outlineOffset: Number.parseFloat(style.outlineOffset),
+          outlineStyle: style.outlineStyle,
+          outlineWidth: Number.parseFloat(style.outlineWidth),
+          left: box.left,
+          right: box.right,
+          top: box.top,
+        };
+      });
+      expect(headerFocusStyle.backgroundColor).toBe("rgba(0, 102, 174, 0.08)");
+      expect(headerFocusStyle.borderRadius).toBe(8);
+      expect(headerFocusStyle.outlineColor).toBe("rgb(0, 102, 174)");
+      expect(headerFocusStyle.outlineStyle).not.toBe("none");
+      expect(headerFocusStyle.outlineWidth).toBe(2);
+      expect(headerFocusStyle.outlineOffset).toBe(2);
+      expect(
+        headerFocusStyle.left -
+          headerFocusStyle.outlineWidth -
+          headerFocusStyle.outlineOffset,
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        headerFocusStyle.right +
+          headerFocusStyle.outlineWidth +
+          headerFocusStyle.outlineOffset,
+      ).toBeLessThanOrEqual(page.viewportSize()!.width);
+      expect(
+        headerFocusStyle.top -
+          headerFocusStyle.outlineWidth -
+          headerFocusStyle.outlineOffset,
+      ).toBeGreaterThanOrEqual(0);
+      expect(
+        headerFocusStyle.bottom +
+          headerFocusStyle.outlineWidth +
+          headerFocusStyle.outlineOffset,
+      ).toBeLessThanOrEqual(page.viewportSize()!.height);
+    }
     keyboardOrder.push(focusedItem);
   }
   expect(keyboardOrder).toEqual([
-    "header:online_cv",
-    "header:website",
+    "header:pdf",
+    "header:email",
     ...expectedActionIds.map((id) => `actions:${id}`),
   ]);
 
@@ -192,6 +292,32 @@ test("the resume is responsive, accessible, local, and keyboard operable", async
 
   const viewport = page.viewportSize()!;
   const width = viewport.width;
+  const headerColumns = await page.evaluate(() => {
+    const row = document.querySelector<HTMLElement>(".resume-header-row")!;
+    const title = document.querySelector<HTMLElement>(".resume-title")!;
+    const contact = document.querySelector<HTMLElement>(".resume-contact")!;
+    const rowBox = row.getBoundingClientRect();
+    const titleBox = title.getBoundingClientRect();
+    const contactBox = contact.getBoundingClientRect();
+    return {
+      contactLeft: contactBox.left,
+      contactRatio: contactBox.width / rowBox.width,
+      contactRight: contactBox.right,
+      rowRight: rowBox.right,
+      titleRatio: titleBox.width / rowBox.width,
+      titleRight: titleBox.right,
+    };
+  });
+  if (width >= 992) {
+    expect(headerColumns.titleRatio).toBeCloseTo(0.54, 2);
+    expect(headerColumns.contactRatio).toBeCloseTo(0.46, 2);
+    expect(headerColumns.contactLeft).toBeGreaterThanOrEqual(
+      headerColumns.titleRight - 1,
+    );
+    expect(headerColumns.contactRight).toBeLessThanOrEqual(
+      headerColumns.rowRight + 1,
+    );
+  }
   const columns = await page.evaluate(() => {
     const main = document.querySelector<HTMLElement>(".resume-main");
     const aside = document.querySelector<HTMLElement>(".resume-aside");
@@ -308,6 +434,14 @@ test("the resume is responsive, accessible, local, and keyboard operable", async
   }
 
   await page.emulateMedia({ reducedMotion: "reduce" });
+  const reducedMotionHeader = await headerPdf.evaluate((element) => ({
+    icon: getComputedStyle(
+      element.querySelector<SVGElement>(".resume-contact-icon")!,
+    ).transitionDuration,
+    link: getComputedStyle(element).transitionDuration,
+  }));
+  expect(Number.parseFloat(reducedMotionHeader.link)).toBeLessThanOrEqual(0.01);
+  expect(Number.parseFloat(reducedMotionHeader.icon)).toBeLessThanOrEqual(0.01);
   const reducedMotionStyles = await actionLinks.first().evaluate((element) => {
     const tooltip = element.querySelector<HTMLElement>(".resume-action-tooltip")!;
     const durations = (value: string) =>
@@ -326,6 +460,24 @@ test("the resume is responsive, accessible, local, and keyboard operable", async
 
   if (browserName === "chromium") {
     await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });
+    await headerPdf.focus();
+    await page.keyboard.press("Shift+Tab");
+    await page.keyboard.press("Tab");
+    await expect(headerPdf).toBeFocused();
+    const forcedColorHeader = await headerPdf.evaluate((element) => {
+      const icon = element.querySelector<SVGElement>(".resume-contact-icon")!;
+      const style = getComputedStyle(element);
+      return {
+        color: style.color,
+        iconColor: getComputedStyle(icon).color,
+        outlineStyle: style.outlineStyle,
+        outlineWidth: Number.parseFloat(style.outlineWidth),
+      };
+    });
+    expect(forcedColorHeader.outlineStyle).not.toBe("none");
+    expect(forcedColorHeader.outlineWidth).toBeGreaterThanOrEqual(2);
+    expect(forcedColorHeader.color).not.toBe("rgba(0, 0, 0, 0)");
+    expect(forcedColorHeader.iconColor).not.toBe("rgba(0, 0, 0, 0)");
     const forcedColorAction = actionLinks.first();
     await forcedColorAction.focus();
     await expect(forcedColorAction).toBeFocused();

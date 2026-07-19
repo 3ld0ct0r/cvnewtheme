@@ -164,9 +164,10 @@ The system is flat inside the document. Screen depth comes from a single ambient
 
 ### Contact Navigation
 
-- **Structure:** An `address` with an ordered list, a decorative `0.82rem` inline SVG, and visible text for every entry.
+- **Structure:** An `address` with an ordered list. The shipped header orders PDF, email, and location; the PDF link contains its decorative inline SVG, email is text-only, and location retains its decorative SVG.
 - **Typography:** Weight 500, `0.75rem`, and 96% width; location is plain text while link kinds remain same-tab links.
 - **Layout:** One row where space allows, then a readable wrapped sequence on narrower screens.
+- **PDF state:** The icon and “Download PDF” label share a 40px-high, 8px-corner target with the restrained blue hover tint and the standard 2px focus-visible outline.
 
 ### Resume Actions
 

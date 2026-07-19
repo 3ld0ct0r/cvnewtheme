@@ -132,9 +132,9 @@
   },
   "outputs": {
     "css": {
-      "bytes": 249196,
+      "bytes": 250178,
       "path": "assets/generated/devresume.min.css",
-      "sha256": "46bbad31baa909be62c048eaa27db8159452d9b0325d1c29ddb0fa45de96e84b"
+      "sha256": "34c58f01a0074ed693f28c6e275aff3aa83eceec5afcd019a00973932f826bd7"
     },
     "fonts": [
       {

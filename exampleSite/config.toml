@@ -23,7 +23,7 @@ tagline = "YOUR_ROLE | YOUR_SPECIALTY"
 executiveHeadline = "Technical leadership, resilient systems, measurable outcomes"
 
 [params.resumeLinks]
-header = ["online_cv", "website", "location"]
+header = ["pdf", "email", "location"]
 actions = ["online_cv", "email", "pdf", "linkedin", "github"]
 
 [params.resumeLinks.items.online_cv]
@@ -52,7 +52,7 @@ label = "Email YOUR_NAME"
 [params.resumeLinks.items.pdf]
 kind = "pdf"
 url = "/resume.pdf"
-text = "Resume PDF"
+text = "Download PDF"
 label = "Download resume PDF"
 
 [params.resumeLinks.items.linkedin]

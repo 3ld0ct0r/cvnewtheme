@@ -19,8 +19,8 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   await openResume(page);
 
   await expectOrderedIds(page, "address.resume-contact", [
-    "online_cv",
-    "website",
+    "pdf",
+    "email",
     "location",
   ]);
   await expectOrderedIds(page, "nav.resume-actions", [
@@ -36,11 +36,34 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   await expect(page.locator("nav.resume-actions [target]")).toHaveCount(0);
   await expect(page.locator("nav.resume-actions i")).toHaveCount(0);
   await expect(
-    page.locator('address.resume-contact [data-resume-link-id="online_cv"] a'),
-  ).toHaveAttribute("href", "https://YOUR_SITE.example.invalid/");
+    page.locator('address.resume-contact [data-resume-link-id="pdf"] a'),
+  ).toHaveText("Download PDF");
   await expect(
-    page.locator('address.resume-contact [data-resume-link-id="website"] a'),
-  ).toHaveAttribute("href", "https://YOUR_SITE.example.invalid/");
+    page.locator('address.resume-contact [data-resume-link-id="pdf"] a'),
+  ).toHaveAccessibleName("Download PDF — Download resume PDF");
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="pdf"] a'),
+  ).toHaveAttribute("href", "/CVTest.pdf");
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="pdf"] a'),
+  ).toHaveAttribute("download", "");
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="pdf"] svg'),
+  ).toHaveCount(1);
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="email"] a'),
+  ).toHaveAttribute("href", "mailto:YOUR_EMAIL@example.invalid");
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="email"] svg'),
+  ).toHaveCount(0);
+  await expect(
+    page.locator('address.resume-contact [data-resume-link-id="location"] svg'),
+  ).toHaveCount(1);
+  await expect(
+    page.locator(
+      'address.resume-contact [data-resume-link-id="online_cv"], address.resume-contact [data-resume-link-id="website"]',
+    ),
+  ).toHaveCount(0);
   await expect(
     page.locator('nav.resume-actions [data-resume-link-id="email"] a'),
   ).toHaveAttribute("href", "mailto:YOUR_EMAIL@example.invalid");
@@ -50,6 +73,9 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   await expect(
     page.locator('nav.resume-actions [data-resume-link-id="pdf"] a'),
   ).toHaveAttribute("download", "");
+  await expect(
+    page.locator('nav.resume-actions [data-resume-link-id="pdf"] a'),
+  ).toHaveAccessibleName("Download resume PDF");
   await expect(
     page.locator('nav.resume-actions [data-resume-link-id="linkedin"] a'),
   ).toHaveAttribute("href", "https://YOUR_PROFILE.example.invalid/");
@@ -71,6 +97,11 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
         .filter((element) => getComputedStyle(element).display !== "none")
         .map((element) => element.dataset.resumeKind),
       mainRatio: mainWidth / (mainWidth + asideWidth),
+      visibleHeaderIds: Array.from(
+        document.querySelectorAll<HTMLElement>(".resume-contact-item"),
+      )
+        .filter((element) => getComputedStyle(element).display !== "none")
+        .map((element) => element.dataset.resumeLinkId),
       tooltipsVisible: Array.from(
         document.querySelectorAll<HTMLElement>(".resume-action-tooltip"),
       ).some((element) => getComputedStyle(element).display !== "none"),
@@ -78,6 +109,7 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   });
   expect(printState.mainRatio).toBeGreaterThanOrEqual(0.595);
   expect(printState.mainRatio).toBeLessThanOrEqual(0.605);
+  expect(printState.visibleHeaderIds).toEqual(["email", "location"]);
   expect(printState.actionKinds).toEqual([
     "online-cv",
     "email",
@@ -112,7 +144,7 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   expect(urls).toContain("https://your_site.example.invalid/");
   expect(
     urls.filter((url) => url === "https://your_site.example.invalid/").length,
-  ).toBeGreaterThanOrEqual(3);
+  ).toBe(1);
   expect(urls).toContain("mailto:your_email@example.invalid");
   expect(urls).toContain("https://your_profile.example.invalid/");
   expect(urls).toContain("https://your_code_profile.example.invalid/");

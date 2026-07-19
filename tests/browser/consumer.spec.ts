@@ -8,6 +8,7 @@ import {
   observePage,
   openResume,
   parsePdf,
+  pdfSentinelKey,
 } from "./support";
 
 test("consumer site satisfies the migrated screen and one-page print contract", async ({
@@ -25,10 +26,13 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   await expectOrderedIds(page, "nav.resume-actions", [
     "online_cv",
     "email",
+    "pdf",
     "linkedin",
     "github",
   ]);
-  await expect(page.locator('[data-resume-kind="pdf"]')).toHaveCount(0);
+  await expect(
+    page.locator('nav.resume-actions a[data-resume-kind="pdf"]'),
+  ).toHaveCount(1);
   await expect(page.locator("nav.resume-actions [target]")).toHaveCount(0);
   await expect(page.locator("nav.resume-actions i")).toHaveCount(0);
   await expect(
@@ -40,6 +44,12 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
   await expect(
     page.locator('nav.resume-actions [data-resume-link-id="email"] a'),
   ).toHaveAttribute("href", "mailto:YOUR_EMAIL@example.invalid");
+  await expect(
+    page.locator('nav.resume-actions [data-resume-link-id="pdf"] a'),
+  ).toHaveAttribute("href", "/CVTest.pdf");
+  await expect(
+    page.locator('nav.resume-actions [data-resume-link-id="pdf"] a'),
+  ).toHaveAttribute("download", "");
   await expect(
     page.locator('nav.resume-actions [data-resume-link-id="linkedin"] a'),
   ).toHaveAttribute("href", "https://YOUR_PROFILE.example.invalid/");
@@ -88,10 +98,10 @@ test("consumer site satisfies the migrated screen and one-page print contract", 
     expect(viewport.height).toBeCloseTo(841.89, 0);
   }
 
-  const allText = parsed.pageTexts.join(" ");
-  const top = allText.indexOf("YOUR_NAME");
-  const middle = allText.indexOf("YOUR_PROJECT_2");
-  const final = allText.indexOf("YOUR_AWARD_YEAR_2");
+  const allText = pdfSentinelKey(parsed.pageTexts.join(" "));
+  const top = allText.indexOf(pdfSentinelKey("YOUR_NAME"));
+  const middle = allText.indexOf(pdfSentinelKey("YOUR_PROJECT_2"));
+  const final = allText.indexOf(pdfSentinelKey("YOUR_AWARD_YEAR_2"));
   expect(top).toBeGreaterThanOrEqual(0);
   expect(middle).toBeGreaterThan(top);
   expect(final).toBeGreaterThan(middle);

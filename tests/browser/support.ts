@@ -218,6 +218,12 @@ export type ParsedPdf = {
   }>;
 };
 
+// PDF.js derives word breaks from positioned glyphs, so Chromium builds can
+// insert whitespace inside a word. Keep every non-whitespace character strict.
+export function pdfSentinelKey(value: string): string {
+  return value.replace(/\s+/gu, "");
+}
+
 export async function parsePdf(bytes: Uint8Array): Promise<ParsedPdf> {
   const loadingTask = getDocument({ data: bytes, disableWorker: true });
   const document = await loadingTask.promise;

@@ -7,14 +7,25 @@ import {
   openResume,
   OVERLONG_URL,
   parsePdf,
+  pdfSentinelKey,
   expectNoPageDiagnostics,
 } from "./support";
 
 function pageContaining(pageTexts: string[], sentinel: string): number {
-  const page = pageTexts.findIndex((text) => text.includes(sentinel));
+  const key = pdfSentinelKey(sentinel);
+  const page = pageTexts.findIndex((text) => pdfSentinelKey(text).includes(key));
   expect(page, `page containing ${sentinel}`).toBeGreaterThanOrEqual(0);
   return page;
 }
+
+test("PDF sentinel matching tolerates extractor-inserted whitespace only", () => {
+  expect(pdfSentinelKey("MAXIMUM CONT ENT T OP")).toBe(
+    pdfSentinelKey("MAXIMUM CONTENT TOP"),
+  );
+  expect(pdfSentinelKey("MAXIMUM CONT ENT POT")).not.toBe(
+    pdfSentinelKey("MAXIMUM CONTENT TOP"),
+  );
+});
 
 test("maximum-content fixture is one tagged, linked A4 page", async ({
   page,
@@ -80,10 +91,10 @@ test("maximum-content fixture is one tagged, linked A4 page", async ({
     expect(viewport.height).toBeCloseTo(841.89, 0);
   }
 
-  const allText = parsed.pageTexts.join(" ");
-  const top = allText.indexOf("MAXIMUM CONTENT TOP");
-  const middle = allText.indexOf("MAXIMUM CONTENT MIDDLE");
-  const final = allText.indexOf("MAXIMUM CONTENT FINAL");
+  const allText = pdfSentinelKey(parsed.pageTexts.join(" "));
+  const top = allText.indexOf(pdfSentinelKey("MAXIMUM CONTENT TOP"));
+  const middle = allText.indexOf(pdfSentinelKey("MAXIMUM CONTENT MIDDLE"));
+  const final = allText.indexOf(pdfSentinelKey("MAXIMUM CONTENT FINAL"));
   expect(top).toBeGreaterThanOrEqual(0);
   expect(middle).toBeGreaterThan(top);
   expect(final).toBeGreaterThan(middle);
@@ -139,10 +150,10 @@ test("exampleSite itself remains one linked A4 page", async ({ page }, testInfo)
   expect(parsed.pageViewports[0].width).toBeCloseTo(595.28, 0);
   expect(parsed.pageViewports[0].height).toBeCloseTo(841.89, 0);
 
-  const allText = parsed.pageTexts[0];
-  const top = allText.indexOf("YOUR_NAME");
-  const middle = allText.indexOf("YOUR_PROJECT_1");
-  const final = allText.indexOf("YOUR_AWARD_YEAR_2");
+  const allText = pdfSentinelKey(parsed.pageTexts[0]);
+  const top = allText.indexOf(pdfSentinelKey("YOUR_NAME"));
+  const middle = allText.indexOf(pdfSentinelKey("YOUR_PROJECT_1"));
+  const final = allText.indexOf(pdfSentinelKey("YOUR_AWARD_YEAR_2"));
   expect(top).toBeGreaterThanOrEqual(0);
   expect(middle).toBeGreaterThan(top);
   expect(final).toBeGreaterThan(middle);
@@ -227,7 +238,7 @@ test("overlong content paginates without clipping or a blank tail page", async (
     expect(viewport.width).toBeCloseTo(595.28, 0);
     expect(viewport.height).toBeCloseTo(841.89, 0);
   }
-  const allText = parsed.pageTexts.join(" ");
+  const allText = pdfSentinelKey(parsed.pageTexts.join(" "));
   const topPage = pageContaining(parsed.pageTexts, "OVERLONG CONTENT TOP");
   const middlePage = pageContaining(parsed.pageTexts, "OVERLONG CONTENT MIDDLE");
   const finalPage = pageContaining(parsed.pageTexts, "OVERLONG CONTENT FINAL");
@@ -239,13 +250,13 @@ test("overlong content paginates without clipping or a blank tail page", async (
     parsed.pageTexts,
     "OVERLONG SPLIT CONTROL END",
   );
-  expect(allText.indexOf("OVERLONG CONTENT MIDDLE")).toBeGreaterThan(
-    allText.indexOf("OVERLONG CONTENT TOP"),
-  );
-  expect(allText.indexOf("OVERLONG CONTENT FINAL")).toBeGreaterThan(
-    allText.indexOf("OVERLONG CONTENT MIDDLE"),
-  );
-  expect(allText).toContain("OVERLONG DOCUMENT TAIL");
+  expect(
+    allText.indexOf(pdfSentinelKey("OVERLONG CONTENT MIDDLE")),
+  ).toBeGreaterThan(allText.indexOf(pdfSentinelKey("OVERLONG CONTENT TOP")));
+  expect(
+    allText.indexOf(pdfSentinelKey("OVERLONG CONTENT FINAL")),
+  ).toBeGreaterThan(allText.indexOf(pdfSentinelKey("OVERLONG CONTENT MIDDLE")));
+  expect(allText).toContain(pdfSentinelKey("OVERLONG DOCUMENT TAIL"));
   expect(topPage).toBe(0);
   expect(middlePage).toBeGreaterThanOrEqual(topPage);
   expect(finalPage).toBeGreaterThanOrEqual(middlePage);
